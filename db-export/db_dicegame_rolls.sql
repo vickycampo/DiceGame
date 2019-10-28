@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: db_dicegame
+-- Host: localhost    Database: db_dicegame
 -- ------------------------------------------------------
 -- Server version	8.0.18
 
@@ -16,29 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `dicerolls`
+-- Table structure for table `rolls`
 --
 
-DROP TABLE IF EXISTS `dicerolls`;
+DROP TABLE IF EXISTS `rolls`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `dicerolls` (
+CREATE TABLE `rolls` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `playerid` int(11) NOT NULL,
-  `dicenumber` int(11) NOT NULL,
-  `roll` int(11) NOT NULL,
-  `dicerollscol` varchar(45) NOT NULL,
+  `result` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dicerolls`
+-- Dumping data for table `rolls`
 --
 
-LOCK TABLES `dicerolls` WRITE;
-/*!40000 ALTER TABLE `dicerolls` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dicerolls` ENABLE KEYS */;
+LOCK TABLES `rolls` WRITE;
+/*!40000 ALTER TABLE `rolls` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rolls` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-28 15:21:19
+-- Dump completed on 2019-10-28 19:12:48
