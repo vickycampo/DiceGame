@@ -11,12 +11,14 @@ import javax.persistence.Id;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Getter @Setter @NoArgsConstructor
-
-public class Dices
+public class Rolls
 {
-    private Integer rollId;
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Integer id;
 
-    private Integer diceNumber;
+    private Integer playersid;
 
-    private Integer roll;
+    private boolean result;
+
 }
