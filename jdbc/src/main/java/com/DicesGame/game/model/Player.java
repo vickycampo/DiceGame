@@ -6,24 +6,24 @@ import java.util.regex.Pattern;
 
 public class Player
 {
-    private int id;
+    private String playerId;
     private String name;
     private String date;
     private List<Roll> playerRolls;
-    public Player( int id, String name, String date )
+    public Player( String playerId, String name, String date )
     {
 
     }
 
-    public int getId()
+    public String getPlayerId()
     {
-        return id;
+        return playerId;
     }
 
-    public void setId(int id)
+    public void setPlayerId(String playerId)
     {
 
-        this.id = id;
+        this.playerId = playerId;
     }
 
     public String getName()

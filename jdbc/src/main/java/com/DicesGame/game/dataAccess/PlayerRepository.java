@@ -18,21 +18,30 @@ public class PlayerRepository
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }
+    public static List<Player> getAllPlayers ()
+    {
+        List<Player> players = new ArrayList<>();
+        jdbcTemplate.query(
+                "SELECT * FROM players",
+                (resultSet, rowNum) -> new Player(resultSet.getString("playerId"), resultSet.getString("name"), resultSet.getString("date"))
+        ).forEach(player -> players.add(player));
+        return (players);
+    }
     public static List<Player> getPlayersByName ( String playerName )
     {
         List<Player> players = new ArrayList<>();
         jdbcTemplate.query(
                 "SELECT * FROM players WHERE name = ?", new Object[] { playerName },
-                (resultSet, rowNum) -> new Player(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("date"))
+                (resultSet, rowNum) -> new Player(resultSet.getString("playerId"), resultSet.getString("name"), resultSet.getString("date"))
         ).forEach(player -> players.add(player));
         return (players);
     }
-    public static Player getPlayersById ( int playerId )
+    public static Player getPlayersById ( String playerId )
     {
         List<Player> players = new ArrayList<>();
         jdbcTemplate.query(
                 "SELECT * FROM players WHERE id = ?", new Object[] { playerId },
-                (resultSet, rowNum) -> new Player(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("date"))
+                (resultSet, rowNum) -> new Player(resultSet.getString("playerId"), resultSet.getString("name"), resultSet.getString("date"))
         ).forEach(player -> players.add(player));
         return (players.get(0));
     }

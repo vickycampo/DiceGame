@@ -16,10 +16,10 @@ public class PlayersController
 
 
     @GetMapping
-    public String homePage (  )
+    public Player homePage (  )
     {
-
-        return PlayerRepository.generateRandomId();
+        Player player = PlayerRepository.getPlayersById( "108bf6f4-dad5-4dbb-bbf8-d46f01456782" );
+        return player;
     }
     //POST: /players: crea un jugador
     @PostMapping
@@ -54,21 +54,11 @@ public class PlayersController
 
     //GET / players / {id} / games: devuelve el listado de jugadas por un jugador.
     @GetMapping (value = "/players/{ID}/games")
-    public List<Roll> getPlayerRolls (@PathVariable String ID ) throws Exception
+    public List<Roll> getPlayerRolls (@PathVariable String ID )
     {
-        int playerId;
-        try
-        {
-            playerId = Integer.parseInt( ID );
-            Player player = PlayerRepository.getPlayersById( playerId );
-            List<Roll> playerRolls = player.getPlayerRolls();
-            return playerRolls;
-        }
-        catch ( Exception e )
-        {
-            throw (new Exception("Error 68 - Not a valid player Id"));
-        }
-
+        Player player = PlayerRepository.getPlayersById( ID );
+        List<Roll> playerRolls = player.getPlayerRolls();
+        return playerRolls;
     }
 
 
