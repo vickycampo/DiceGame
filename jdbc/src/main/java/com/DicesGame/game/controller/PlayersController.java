@@ -4,22 +4,24 @@ package com.DicesGame.game.controller;
 import com.DicesGame.game.model.Player;
 import com.DicesGame.game.dataAccess.PlayerRepository;
 import com.DicesGame.game.model.Roll;
+import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
 public class PlayersController
 {
-    PlayerRepository playerRepo = new PlayerRepository();
-
-
-
+    private List<Player> players;
+    private PlayerRepository playerRepo;
     @GetMapping
-    public Player homePage (  )
+    public String homePage (  )
     {
-        Player player = PlayerRepository.getPlayersById( "108bf6f4-dad5-4dbb-bbf8-d46f01456782" );
-        return player;
+        playerRepo = new PlayerRepository();
+        players = playerRepo.getAllPlayers();
+        String jsonString = this.ToString( players );
+        return jsonString;
     }
     //POST: /players: crea un jugador
     @PostMapping
@@ -56,10 +58,23 @@ public class PlayersController
     @GetMapping (value = "/players/{ID}/games")
     public List<Roll> getPlayerRolls (@PathVariable String ID )
     {
-        Player player = PlayerRepository.getPlayersById( ID );
+        Player player = playerRepo.getPlayersById( ID );
         List<Roll> playerRolls = player.getPlayerRolls();
         return playerRolls;
     }
+
+    private String ToString ( List <Player> Players )
+    {
+        StringBuilder jsonString = new StringBuilder("Players:[");
+        players.forEach( player -> jsonString.append( player.toString() + "," ) );
+        jsonString.append("]");
+        return jsonString.toString();
+    }
+    private String ToString ( Player player )
+    {
+        return "";
+    }
+
 
 
 

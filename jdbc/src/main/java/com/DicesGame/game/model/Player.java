@@ -12,6 +12,16 @@ public class Player
     private List<Roll> playerRolls;
     public Player( String playerId, String name, String date )
     {
+        try
+        {
+            setPlayerId( playerId );
+            setName( name );
+            setDate( date );
+        }
+        catch (Exception e)
+        {
+            e.getMessage();
+        }
 
     }
 
@@ -61,8 +71,19 @@ public class Player
 
     }
 
+
     public List<Roll> getPlayerRolls()
     {
         return playerRolls;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "playerId='" + playerId + '\'' +
+                ", name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", playerRolls=" + playerRolls +
+                '}';
     }
 }
