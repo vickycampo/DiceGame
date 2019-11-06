@@ -63,12 +63,9 @@ public class PlayerRepository
     }
     public String delete ( String playerId) throws Exception
     {
-        Object[] params = new Object[] { playerId  };
-        System.out.println(params.toString());
-        System.out.println(deleteSql);
         try
         {
-            int row = jdbcTemplate.update(deleteSql, params );
+            int row = jdbcTemplate.update( deleteSql , playerId );
             if ( row == 0)
             {
                 throw ( new Exception("No record was deleted"));
