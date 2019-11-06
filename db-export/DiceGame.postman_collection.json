@@ -1,0 +1,71 @@
+{
+	"variables": [],
+	"info": {
+		"name": "DiceGame",
+		"_postman_id": "7aacc491-70bc-697f-ceb6-5b5cdf252972",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Home",
+			"request": {
+				"url": "localhost:8080/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"customer666name\",\r\n\"email\": \"customer666@taxidriver.com\",\r\n\"password\": \"customer666passwd\",\r\n\"dni\": \"66699966A\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "post/players",
+			"request": {
+				"url": "localhost:8080/players",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"customer666name\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "put/players",
+			"request": {
+				"url": "localhost:8080/players",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"playerId\":\"ff936796-6d79-4365-b973-8f22c8c51c18\",\r\n\t\"name\": \"customer666\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

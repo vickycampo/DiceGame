@@ -4,7 +4,10 @@ package com.DicesGame.game.controller;
 import com.DicesGame.game.model.Player;
 import com.DicesGame.game.dataAccess.PlayerRepository;
 import com.DicesGame.game.model.Roll;
-import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Iterator;
@@ -14,66 +17,173 @@ import java.util.List;
 public class PlayersController
 {
     private List<Player> players;
-    private PlayerRepository playerRepo;
+    private Player singlePlayers;
+    private PlayerRepository playerRepo  = new PlayerRepository();
     @GetMapping
     public String homePage (  )
     {
-        playerRepo = new PlayerRepository();
-        players = playerRepo.getAllPlayers();
-        String jsonString = this.ToString( players );
-        return jsonString;
+        players = playerRepo.findAll();
+        String jsonString = "{" + this.toString() + "}";
+        JSONObject sendData = new JSONObject( jsonString );
+        return sendData.toString();
     }
+
     //POST: /players: crea un jugador
-    @PostMapping
-    public int createPlayer ( @RequestParam String name )
+    @PostMapping ( value = "/players" )
+    public String createPlayer ( @RequestBody String dataString )
     {
         //check if name available
+        JSONObject getData = new JSONObject( dataString );
+        String name = getData.getString("name");
+
+        if (name == "")
+        {
+            name = "Anonymous";
+        }
+        List<Player> players = playerRepo.findByName( name );
+        if (( players != null )&&( players.size() > 0 ))
+        {
+            //players exists and cannot be added again
+            String jsonString = generateMessageJson ( "ERROR", "That name already exists in the db." );
+            System.out.println( jsonString );
+            JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+            return sendData.toString();
+        }
+        else
+        {
+
+            try
+            {
+                String playerId = playerRepo.save( name );
+                String jsonString = generateMessageJson ( "SUCCESS", "Player added to the db." );
+                JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+                sendData.put("playerId", playerId);
+                return sendData.toString();
+            }
+            catch (Exception e)
+            {
+                String jsonString = generateMessageJson ( "ERROR", e.getMessage() );
+                JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+                return sendData.toString();
+            }
 
 
-        return 0; //returns the id of the player
+        }
     }
 
     //PUT / players: modifica el nombre del jugador
-    @PutMapping
-    public boolean modifyPlayerName ()
+    //@RequestMapping( value = "/employees", produces = "application/json", method = {RequestMethod.PUT})
+    @PutMapping  ( value = "/players" )
+    public String modifyPlayer ( @RequestBody String dataString )
     {
-        return false; //returns if the values were updated
+        //check if name available
+        JSONObject getData = new JSONObject( dataString );
+        String playerId = getData.getString("playerId");
+        String name = getData.getString("name");
+
+        if (name == "")
+        {
+            name = "Anonymous";
+        }
+        List<Player> players = playerRepo.findByName( name );
+        if (( players != null )&&( players.size() > 0 ))
+        {
+            //players exists and cannot be added again
+            String jsonString = generateMessageJson ( "ERROR", "That new name already exists in the db." );
+            System.out.println( jsonString );
+            JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+            return sendData.toString();
+        }
+        else
+        {
+            try
+            {
+                playerId = playerRepo.update(playerId ,  name );
+                String jsonString = generateMessageJson ( "SUCCESS", "Player modified in the db." );
+                JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+                sendData.put("playerId", playerId);
+                return sendData.toString();
+            }
+            catch (Exception e)
+            {
+                String jsonString = generateMessageJson ( "ERROR", e.getMessage() );
+                JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+                return sendData.toString();
+            }
+        }
+    }
+
+    @DeleteMapping (value = "/players/{playerId}")
+    public String deletePlayer ( @PathVariable String playerId )
+    {
+        try
+        {
+            playerId = playerRepo.delete(playerId);
+            String jsonString = generateMessageJson ( "SUCCESS", "Player was removed from the db." );
+            JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+            sendData.put("playerId", playerId);
+            return sendData.toString();
+        }
+        catch (Exception e)
+        {
+            String jsonString = generateMessageJson ( "ERROR", e.getMessage() );
+            JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+            return sendData.toString();
+        }
+
     }
 
     //POST / players / {id} / games /: un jugador específico realiza una tirada de los dados.
-    @PostMapping (value = "/players/{ID}/games")
-    public int rollDices ( @PathVariable String id )
+    @PostMapping (value = "/players/{playerId}/games")
+    public String rollDices ( @PathVariable String playerId )
     {
-        return 0; //returns the id of the roll.
+        //playerRepo.diceRoll ( id );
+        return playerId; //returns the id of the roll.
     }
 
     //DELETE / players / {id} / games: elimina las tiradas del jugador.
-    @DeleteMapping (value = "/players/{ID}/games")
-    public boolean deletePlayerRolls ( @PathVariable String id )
+    @DeleteMapping (value = "/players/{playerId}/games")
+    public boolean deletePlayerRolls ( @PathVariable String playerId )
     {
         return false; //returns if they were deleted
     }
 
     //GET / players / {id} / games: devuelve el listado de jugadas por un jugador.
-    @GetMapping (value = "/players/{ID}/games")
-    public List<Roll> getPlayerRolls (@PathVariable String ID )
+    @GetMapping (value = "/players/{playerId}/games")
+    public List<Roll> getPlayerRolls (@PathVariable String playerId )
     {
-        Player player = playerRepo.getPlayersById( ID );
+        Player player = playerRepo.findByPlayerid( playerId );
         List<Roll> playerRolls = player.getPlayerRolls();
         return playerRolls;
     }
-
-    private String ToString ( List <Player> Players )
+    @Override
+    public String toString ()
     {
-        StringBuilder jsonString = new StringBuilder("Players:[");
-        players.forEach( player -> jsonString.append( player.toString() + "," ) );
-        jsonString.append("]");
+        StringBuilder jsonString = new StringBuilder("\"Employe\": [");
+        if ( !players.isEmpty() )
+        {
+            players.forEach( player -> jsonString.append( player.toString() + ", " ) );
+            jsonString.delete(jsonString.length()-2 , jsonString.length());
+            jsonString.append("]");
+            players.clear();
+        }
+        else if ( singlePlayers != null )
+        {
+            jsonString.append( singlePlayers.toString() );
+            singlePlayers = null;
+        }
         return jsonString.toString();
     }
-    private String ToString ( Player player )
+    public String generateMessageJson ( String type, String message )
     {
-        return "";
+        StringBuilder jsonString = new StringBuilder("Message:{");
+        jsonString.append("\"Type\":\"" + type + "\", ");
+        jsonString.append("\"Message\":\"" + message + "\" ");
+        jsonString.append("}");
+        return jsonString.toString();
     }
+
+
 
 
 

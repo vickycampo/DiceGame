@@ -7,27 +7,24 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public class JdbcDataSource
 {
 
-    private final String driverClassName = "com.mysql.cj.jdbc.Driver";
-    private final String url = "jdbc:mysql://localhost:3306/db_dicegame";
-    private final String dbUsername = "root";
-    private final String dbPassword = "root";
-    public JdbcTemplate template;
+    private static final String driverClassName = "com.mysql.cj.jdbc.Driver";
+    private static final String url = "jdbc:mysql://localhost:3306/db_dicegame";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "root";
+    private static JdbcTemplate template;
 
     private DataSource dataSource;
 
-    public JdbcDataSource() throws Exception
+    public static void JdbcDataConnection() throws Exception
     {
-
-        dataSource = getDataSource();
+        DriverManagerDataSource dataSource = getDataSource();
         //JdbcTemplate template = new JdbcTemplate(dataSource); // constructor
-        this.template = new JdbcTemplate();
-        this.template.setDataSource(dataSource);
+        template = new JdbcTemplate();
+        template.setDataSource(dataSource);
         System.out.println(dataSource.getClass());
-
-
     }
 
-    public DriverManagerDataSource getDataSource()
+    private static DriverManagerDataSource getDataSource()
     {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(driverClassName);
@@ -37,8 +34,12 @@ public class JdbcDataSource
         return dataSource;
     }
 
-    public JdbcTemplate getTemplate()
+    public static JdbcTemplate getTemplate() throws Exception
     {
-        return this.template;
+        if ( template == null )
+        {
+            JdbcDataConnection();
+        }
+        return template;
     }
 }

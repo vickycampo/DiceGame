@@ -80,10 +80,10 @@ public class Player
     @Override
     public String toString() {
         return "{" +
-                "playerId='" + playerId + '\'' +
-                ", name='" + name + '\'' +
-                ", date='" + date + '\'' +
-                ", playerRolls=" + playerRolls +
-                '}';
+                "\"playerId\":\"" + playerId + "\"" +
+                ", \"name\":\"" + name + "\"" +
+                ", \"date\":\"" + date + "\"" +
+                ", \"playerRolls\":\"" + playerRolls +
+                "\"}";
     }
 }
