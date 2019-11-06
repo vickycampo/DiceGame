@@ -3,9 +3,8 @@ package com.DicesGame.game.model;
 public class Dice
 {
     private int id;
-    private int rollsId;
-    private int diceNumber;
-    private int roll;
+    private int rollid;
+    private int result;
 
     public Dice()
     {
