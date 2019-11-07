@@ -41,7 +41,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"name\": \"customer666name\"\r\n}"
+					"raw": "{\r\n\"name\": \"\"\r\n}"
 				},
 				"description": ""
 			},
@@ -62,6 +62,86 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n\t\"playerId\":\"ff936796-6d79-4365-b973-8f22c8c51c18\",\r\n\t\"name\": \"customer666\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete/players/ {id}",
+			"request": {
+				"url": "localhost:8080/players/aa09dd2d-91fb-4f72-91c9-ebaae40f6655",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "post/players/{id}/games/",
+			"request": {
+				"url": "localhost:8080/players/a48ffb69-5784-47ca-8a0c-4d27bf7e37fc/games/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get/players/{id}/games/",
+			"request": {
+				"url": "localhost:8080/players/a48ffb69-5784-47ca-8a0c-4d27bf7e37fc/games/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete/players/{id}/games/",
+			"request": {
+				"url": "localhost:8080/players/a48ffb69-5784-47ca-8a0c-4d27bf7e37fc/games/",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
 				},
 				"description": ""
 			},

@@ -6,10 +6,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.DicesGame.game.model.Player;
 import com.DicesGame.game.config.JdbcDataSource;
 
-import java.rmi.server.ExportException;
 import java.sql.Types;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -21,11 +21,6 @@ public class PlayerRepository
     @Autowired
     private JdbcTemplate jdbcTemplate;
     private static final Logger LOGGER = Logger.getLogger( PlayerRepository.class.getName() );
-
-    /* SQL Strings */
-    private static final String insertSql =  "INSERT INTO players ( playerid,  name, date ) VALUES ( ? , ? , ? )";
-    private static final String updateSql = "UPDATE players SET name = ? WHERE playerid = ?";
-    private static final String deleteSql = "DELETE FROM players WHERE playerid = ?";
 
     public PlayerRepository()
     {
@@ -48,16 +43,18 @@ public class PlayerRepository
     {
         String playerid = generateRandomId();
         LocalDate date = LocalDate.now();
+        String insertSql =  "INSERT INTO players ( playerid,  name, date ) VALUES ( ? , ? , ? )";
         Object[] params = new Object[] { playerid, name, date.toString() };
         int[] types = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
         try
         {
             int row = jdbcTemplate.update(insertSql, params, types);
+
             return playerid;
         }
         catch (DataAccessException e)
         {
-            throw ( new Exception (e.getMessage()));
+            throw ( new Exception ("Error 56 - " + e.getMessage()));
         }
 
     }
@@ -65,10 +62,11 @@ public class PlayerRepository
     {
         try
         {
+            String deleteSql = "DELETE FROM players WHERE playerid = ?";
             int row = jdbcTemplate.update( deleteSql , playerId );
             if ( row == 0)
             {
-                throw ( new Exception("No record was deleted"));
+                throw ( new Exception("Error 68 - No record was deleted"));
             }
             return playerId;
         }
@@ -79,10 +77,9 @@ public class PlayerRepository
     }
     public String update ( String playerId , String name ) throws Exception
     {
+        String updateSql = "UPDATE players SET name = ? WHERE playerid = ?";
         Object[] params = new Object[] { name , playerId };
         int[] types = new int[] { Types.VARCHAR, Types.VARCHAR };
-        System.out.println(updateSql);
-        System.out.println(params.toString());
         try
         {
             int row = jdbcTemplate.update(updateSql, params, types);
@@ -90,7 +87,7 @@ public class PlayerRepository
         }
         catch (DataAccessException e)
         {
-            throw ( new Exception (e.getMessage()));
+            throw ( new Exception ("Error 89 - " + e.getMessage()));
         }
     }
     public List<Player> findAll ()
@@ -115,12 +112,27 @@ public class PlayerRepository
     }
     public Player findByPlayerid ( String playerId )
     {
+
         List<Player> players = new ArrayList<>();
         jdbcTemplate.query(
-                "SELECT * FROM players WHERE id = ?", new Object[] { playerId },
+                "SELECT * FROM players WHERE playerid = ?", new Object[] { playerId },
                 (resultSet, rowNum) -> new Player(resultSet.getString("playerId"), resultSet.getString("name"), resultSet.getString("date"))
         ).forEach(player -> players.add(player));
-        return (players.get(0));
+
+        System.out.println("Size  - " + players.size());
+        if ( players.size() > 0)
+        {
+            Iterator iter = players.iterator();
+            Player singlePlayer = (Player) iter.next();
+            return singlePlayer;
+        }
+        else
+        {
+            return null;
+        }
+
+
+
     }
 
 
