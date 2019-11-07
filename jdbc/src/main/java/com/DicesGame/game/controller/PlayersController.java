@@ -213,9 +213,6 @@ public class PlayersController
             this.dices = diceRepo.findByRollsId( rollId );
 
             jsonString.append(this.toString());
-            System.out.println("--------------------------------------------");
-            System.out.println(jsonString.toString());
-            System.out.println("--------------------------------------------");
             JSONObject sendData = new JSONObject( "{" + jsonString.toString() + "}" );
             return sendData.toString();
 
@@ -261,17 +258,15 @@ public class PlayersController
             }
             catch (NullPointerException e)
             {
-                System.out.println("--------------------------------------------");
-                System.out.println("NullPointerException - " + e.getMessage());
-                System.out.println("--------------------------------------------");
+
+                String jsonString = generateMessageJson ( "ERROR", "Error 262 - " + e.getMessage() );
+                JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+                return sendData.toString();
             }
 
         }
         StringBuilder jsonString = new StringBuilder();
         jsonString.append(this.toString());
-        System.out.println("--------------------------------------------");
-        System.out.println(jsonString.toString());
-        System.out.println("--------------------------------------------");
         JSONObject sendData = new JSONObject( "{" + jsonString.toString() + "}" );
         return sendData.toString();
     }
