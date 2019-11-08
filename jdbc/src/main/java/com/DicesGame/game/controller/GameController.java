@@ -40,7 +40,7 @@ public class GameController
         }
         catch ( Exception e )
         {
-            String jsonString = generateMessageJson ( "ERROR", "Error 42 - The rolls were not deleted." );
+            String jsonString = generateMessageJson ( "ERROR", "Error 43 - " + e.getMessage() );
             JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
             return sendData.toString();
         }
@@ -63,7 +63,8 @@ public class GameController
                 jsonString.append( "\"PlayerId\":\"" + playerId + "\", ");
                 jsonString.append( "\"Wins\":\"" + results.get("WIN") + "\", ");
                 jsonString.append( "\"Loses\":\"" + results.get("LOST") + "\", ");
-                jsonString.append( "\"WinsPercentage\":\"" + results.get("AVG") + "\" ");
+                jsonString.append( "\"WinsPercentage\":\"" + results.get("AVG_WINS") + "\", ");
+                jsonString.append( "\"WinsPercentage\":\"" + results.get("AVG_LOSTS") + "\" ");
                 jsonString.append( "}, ");
 
 
@@ -102,12 +103,14 @@ public class GameController
         try
         {
             List<String> playerIds = playerRepo.findAllIds();
-            JSONObject sendData = new JSONObject( rollRepo.findBiggestLoser( playerIds ) );
+            String biggestLoser = rollRepo.findBiggestLoser( playerIds );
+            System.out.println( biggestLoser );
+            JSONObject sendData = new JSONObject( biggestLoser );
             return sendData.toString();
         }
         catch ( Exception e )
         {
-            String jsonString = generateMessageJson ( "ERROR", "Error 42 - The rolls were not deleted." );
+            String jsonString = generateMessageJson ( "ERROR", "Error 111 - " +  e.getMessage());
             JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
             return sendData.toString();
         }
@@ -119,8 +122,21 @@ public class GameController
     public String getBiggestWinner ()
     {
 
-        JSONObject sendData = new JSONObject( rollRepo.findBiggestWinner() );
-        return sendData.toString();
+        this.clearData ();
+        try
+        {
+            List<String> playerIds = playerRepo.findAllIds();
+            String biggestWinner = rollRepo.findBiggestWinner( playerIds );
+            System.out.println( biggestWinner );
+            JSONObject sendData = new JSONObject( biggestWinner );
+            return sendData.toString();
+        }
+        catch ( Exception e )
+        {
+            String jsonString = generateMessageJson ( "ERROR", "Error 132 - " +  e.getMessage());
+            JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+            return sendData.toString();
+        }
     }
 
 

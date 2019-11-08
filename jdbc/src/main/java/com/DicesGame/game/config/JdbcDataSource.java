@@ -8,7 +8,7 @@ public class JdbcDataSource
 {
 
     private static final String driverClassName = "com.mysql.cj.jdbc.Driver";
-    private static final String url = "jdbc:mysql://localhost:3306/db_dicegame";
+    private static final String url = "jdbc:mysql://localhost:3307/db_dicegame";
     private static final String dbUsername = "root";
     private static final String dbPassword = "root";
     private static JdbcTemplate template;

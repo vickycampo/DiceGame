@@ -4,3 +4,8 @@ git add README.md
 git commit -m "first commit"
 git remote add origin https://github.com/vickycampo/DiceGame.git
 git push -u origin master
+
+## Fix the time zone error:
+```
+SET GLOBAL time_zone = '-3:00';
+```
