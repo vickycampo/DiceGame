@@ -9,7 +9,6 @@ public class Player
     private String playerId;
     private String name;
     private String date;
-    private List<Roll> playerRolls;
     public Player( String playerId, String name, String date )
     {
         try
@@ -71,19 +70,12 @@ public class Player
 
     }
 
-
-    public List<Roll> getPlayerRolls()
-    {
-        return playerRolls;
-    }
-
     @Override
     public String toString() {
         return "{" +
                 "\"playerId\":\"" + playerId + "\"" +
                 ", \"name\":\"" + name + "\"" +
                 ", \"date\":\"" + date + "\"" +
-                ", \"playerRolls\":\"" + playerRolls +
-                "\"}";
+                "}";
     }
 }

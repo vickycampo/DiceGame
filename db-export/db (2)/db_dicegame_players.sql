@@ -37,7 +37,7 @@ CREATE TABLE `players` (
 
 LOCK TABLES `players` WRITE;
 /*!40000 ALTER TABLE `players` DISABLE KEYS */;
-INSERT INTO `players` VALUES ('108bf6f4-dad5-4dbb-bbf8-d46f01456782','Patricia','2019-09-21'),('47c275c0-b307-4e83-8297-99981034b9fa','Jorge','2019-10-25'),('48da80e4-45bc-4012-ba94-81a19760615f','Anonymous','2019-11-07'),('55a55fbc-2d54-4e2e-9fc2-4094abc93239','Anonymous','2017-01-25'),('5fcb1bdd-79f0-491b-b761-222acecaf68c','Anonymous','2019-11-07'),('89d4e18d-c1fd-4a57-86fa-008eed01677d','Anonymous','2019-11-07'),('91b3a43d-fd85-4590-a5c9-a23d02e98a78','Anonymous','2019-11-07'),('9ac4b223-3c70-4ff4-8b70-ed93f77381f5','Anonymous','2019-11-07'),('9d1ccd50-0386-40f5-bd87-14caf502865b','Rodrigo','2019-12-01'),('a48ffb69-5784-47ca-8a0c-4d27bf7e37fc','Mario','2019-11-01'),('aff79042-163d-4cc8-a929-02edf2b8b6e1','Anonymous','2019-11-07'),('d574984a-9663-4477-89b8-894889546afa','Ana','2019-08-10'),('e0c0898d-0fc7-4907-9bca-3a81c8ad6aec','Anonymous','2019-11-07'),('e4862703-cc23-4966-8868-ef022ed6f65b','Anonymous','2019-11-07');
+INSERT INTO `players` VALUES ('47c275c0-b307-4e83-8297-99981034b9fa','Jorge','2019-10-25'),('48da80e4-45bc-4012-ba94-81a19760615f','Anonymous','2019-11-07'),('55a55fbc-2d54-4e2e-9fc2-4094abc93239','Anonymous','2017-01-25'),('5b0bb58b-1fb2-4bff-927c-8df68363d0c8','Anonymous','2019-11-08'),('5fcb1bdd-79f0-491b-b761-222acecaf68c','Anonymous','2019-11-07'),('805e571c-1582-4105-9075-55c1c0ae83b7','Anonymous','2019-11-08'),('89d4e18d-c1fd-4a57-86fa-008eed01677d','Anonymous','2019-11-07'),('91b3a43d-fd85-4590-a5c9-a23d02e98a78','Anonymous','2019-11-07'),('9ac4b223-3c70-4ff4-8b70-ed93f77381f5','Anonymous','2019-11-07'),('9d1ccd50-0386-40f5-bd87-14caf502865b','Rodrigo','2019-12-01'),('a48ffb69-5784-47ca-8a0c-4d27bf7e37fc','Mario','2019-11-01'),('aff79042-163d-4cc8-a929-02edf2b8b6e1','Anonymous','2019-11-07'),('d574984a-9663-4477-89b8-894889546afa','Ana','2019-08-10'),('d6b8e670-a042-4a33-a199-87fde58eb9f1','Anonymous','2019-11-08'),('e0c0898d-0fc7-4907-9bca-3a81c8ad6aec','Anonymous','2019-11-07'),('e4862703-cc23-4966-8868-ef022ed6f65b','Anonymous','2019-11-07');
 /*!40000 ALTER TABLE `players` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-07 14:46:51
+-- Dump completed on 2019-11-08 15:19:09

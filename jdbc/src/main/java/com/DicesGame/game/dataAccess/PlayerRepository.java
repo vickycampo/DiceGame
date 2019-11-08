@@ -54,7 +54,7 @@ public class PlayerRepository
         }
         catch (DataAccessException e)
         {
-            throw ( new Exception ("Error 56 - " + e.getMessage()));
+            throw ( new Exception ("Player - "  + e.getMessage()));
         }
 
     }
@@ -72,7 +72,7 @@ public class PlayerRepository
         }
         catch (DataAccessException e)
         {
-            throw ( new Exception (e.getMessage()));
+            throw ( new Exception ("Player - " + e.getMessage()));
         }
     }
     public String update ( String playerId , String name ) throws Exception
@@ -87,18 +87,24 @@ public class PlayerRepository
         }
         catch (DataAccessException e)
         {
-            throw ( new Exception ("Error 89 - " + e.getMessage()));
+            throw ( new Exception ("Player - " + e.getMessage()));
         }
     }
-    public List<Player> findAll ()
+    public List<Player> findAll () throws Exception
     {
-        List<Player> players = new ArrayList<>();
-        jdbcTemplate.query(
-                "SELECT * FROM players",
-                (resultSet, rowNum) -> new Player(resultSet.getString("playerId"), resultSet.getString("name"), resultSet.getString("date"))
-        ).forEach(player -> players.add(player));
-        LOGGER.log(Level.FINE, "getAllPlayers()", players);
-        return (players);
+        try
+        {
+            List<Player> players = new ArrayList<>();
+            jdbcTemplate.query(
+                    "SELECT * FROM players",
+                    (resultSet, rowNum) -> new Player(resultSet.getString("playerId"), resultSet.getString("name"), resultSet.getString("date"))
+            ).forEach(player -> players.add(player));
+            LOGGER.log(Level.FINE, "getAllPlayers()", players);
+            return (players);
+        } catch (DataAccessException e)
+        {
+            throw (new Exception( e.getMessage() ));
+        }
     }
 
     public List<Player> findByName ( String playerName )
@@ -133,6 +139,14 @@ public class PlayerRepository
 
 
 
+    }
+    public List<String> findAllIds()
+    {
+        List<String> playersIds = new ArrayList<>();
+        jdbcTemplate.query(
+                "SELECT playerid FROM players",
+                (resultSet, rowNum) -> playersIds.add(resultSet.getString("playerid")));
+        return (playersIds);
     }
 
 

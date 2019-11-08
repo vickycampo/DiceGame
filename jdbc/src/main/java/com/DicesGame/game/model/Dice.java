@@ -1,5 +1,9 @@
 package com.DicesGame.game.model;
 
+import org.apache.el.parser.AstLambdaParameters;
+
+import javax.el.LambdaExpression;
+
 public class Dice
 {
     private int id;
@@ -13,6 +17,10 @@ public class Dice
         setRollid( rollid );
         setDicenumber( dicenumber );
         setRoll( roll );
+
+    }
+    public Dice (AstLambdaParameters lambdaParameters)
+    {
 
     }
 

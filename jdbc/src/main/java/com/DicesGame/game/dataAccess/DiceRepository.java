@@ -5,12 +5,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.DicesGame.game.model.Dice;
 import com.DicesGame.game.config.JdbcDataSource;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,16 +58,65 @@ public class DiceRepository
         }
         catch (DataAccessException e)
         {
-            throw ( new Exception (e.getMessage()));
+            throw ( new Exception ("Dice - " + e.getMessage()));
         }
     }
-    public List<Dice> findByRollsId ( int rollsId )
+    public List<Dice> findByRollsId ( int rollsId ) throws Exception
     {
-        List<Dice> dices = new ArrayList<>();
-        jdbcTemplate.query(
-                "SELECT * FROM dices WHERE rollsId = ?", new Object[] { rollsId },
-                (resultSet, rowNum) -> new Dice (resultSet.getInt("id"), resultSet.getInt("rollsid"), resultSet.getInt("dicenumber"), resultSet.getInt("roll"))
-        ).forEach(dice -> dices.add(dice));
-        return dices;
+        try
+        {
+            List<Dice> dices = new ArrayList<>();
+            jdbcTemplate.query(
+                    "SELECT * FROM dices WHERE rollsId = ?", new Object[] { rollsId },
+                    (resultSet, rowNum) -> new Dice (resultSet.getInt("id"), resultSet.getInt("rollsid"), resultSet.getInt("dicenumber"), resultSet.getInt("roll"))
+            ).forEach(dice -> dices.add(dice));
+            return dices;
+        }
+        catch (DataAccessException e)
+        {
+            throw (new Exception( e.getMessage() ));
+        }
+    }
+    public List<Dice> findByRollsIds ( List<Integer> thisRollId ) throws Exception
+    {
+        try
+        {
+            Iterator iterator = thisRollId.iterator();
+            List<Dice> dices = new ArrayList<>();
+            while ( iterator.hasNext() )
+            {
+
+                jdbcTemplate.query(
+                        "SELECT * FROM dices WHERE rollsId = ?", new Object[] { iterator.next() },
+                        (resultSet, rowNum) -> new Dice (resultSet.getInt("id"), resultSet.getInt("rollsid"), resultSet.getInt("dicenumber"), resultSet.getInt("roll"))
+                ).forEach(dice -> dices.add(dice));
+
+            }
+            return dices;
+
+        }
+        catch (DataAccessException e)
+        {
+            throw (new Exception( e.getMessage() ));
+        }
+
+
+
+    }
+    public boolean deleteByRollIds ( List<Integer> rollsIds ) throws Exception
+    {
+        try
+        {
+            Iterator iterator = rollsIds.iterator();
+            String deleteSql = "DELETE FROM dices WHERE rollsId = ?";
+            while ( iterator.hasNext() )
+            {
+                int row = jdbcTemplate.update( deleteSql , iterator.next() );
+            }
+            return true;
+        } catch (Exception e)
+        {
+            throw ( new Exception ("Dice - " + e.getMessage()));
+        }
     }
 }

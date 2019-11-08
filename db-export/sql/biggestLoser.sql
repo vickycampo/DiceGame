@@ -1,0 +1,1 @@
+SELECT playersid, result, COUNT(result) plays  FROM rolls GROUP BY playersid ORDER BY plays

@@ -7,11 +7,12 @@ import com.DicesGame.game.model.*;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @RestController
-public class PlayersController
+public class PlayerController
 {
     private List<Player> players;
     private Player singlePlayers;
@@ -27,11 +28,50 @@ public class PlayersController
     @GetMapping
     public String homePage (  )
     {
-        this.clearData ();
-        players = playerRepo.findAll();
-        String jsonString = "{" + this.toString() + "}";
-        JSONObject sendData = new JSONObject( jsonString );
-        return sendData.toString();
+        try {
+            this.clearData ();
+            players = playerRepo.findAll();
+            String jsonString = "{" + this.toString() + "}";
+            JSONObject sendData = new JSONObject( jsonString );
+            return sendData.toString();
+        } catch (Exception e)
+        {
+            String jsonString = generateMessageJson ( "ERROR", "Error 39 - " + e.getMessage() );
+            JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+            return sendData.toString();
+        }
+    }
+    @GetMapping (value ="/autogenerate")
+    public String autogenerate ()
+    {
+
+        try
+        {
+            this.clearData ();
+            List<Player> localPlayers;
+            localPlayers = playerRepo.findAll();
+            Iterator iterator = localPlayers.iterator();
+            String playerId = "";
+            int randomPlays = (int)(1 + (Math.random() * (10 - 1)));
+            while ( iterator.hasNext() )
+            {
+                Player player = (Player) iterator.next();
+                playerId = player.getPlayerId();
+
+                System.out.println("player id - " + playerId + " - randomPlays - " + randomPlays);
+                for (int i = 0; i < randomPlays ; i++)
+                {
+                    this.rollDices ( playerId );
+
+                }
+
+            }
+            return ("ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ("error");
+
     }
 
     //POST: /players: crea un jugador
@@ -72,7 +112,7 @@ public class PlayersController
             }
             catch (Exception e)
             {
-                String jsonString = generateMessageJson ( "ERROR", e.getMessage() );
+                String jsonString = generateMessageJson ( "ERROR 83 - ", e.getMessage() );
                 JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
                 return sendData.toString();
             }
@@ -121,7 +161,7 @@ public class PlayersController
             }
             catch (Exception e)
             {
-                String jsonString = generateMessageJson ( "ERROR", e.getMessage() );
+                String jsonString = generateMessageJson ( "ERROR 132 - ", e.getMessage() );
                 JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
                 return sendData.toString();
             }
@@ -154,7 +194,7 @@ public class PlayersController
         }
         catch (Exception e)
         {
-            String jsonString = generateMessageJson ( "ERROR", e.getMessage() );
+            String jsonString = generateMessageJson ( "ERROR 165 - ", e.getMessage() );
             JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
             return sendData.toString();
         }
@@ -182,7 +222,7 @@ public class PlayersController
             } while ( (results[i] < min ) || (results[i] > max ) );
             sum += results[i];
         }
-        //check the result - win - the sum is 7 / loose anything else.
+        //check the result - win - the sum is 7 / lose anything else.
         String result;
         if ( sum == 7)
         {
@@ -190,7 +230,7 @@ public class PlayersController
         }
         else
         {
-            result = "LOOSE";
+            result = "LOST";
         }
 
 
@@ -212,7 +252,9 @@ public class PlayersController
             this.singleRoll = rollRepo.findByRollid ( rollId );
             this.dices = diceRepo.findByRollsId( rollId );
 
+            jsonString.append(", ");
             jsonString.append(this.toString());
+
             JSONObject sendData = new JSONObject( "{" + jsonString.toString() + "}" );
             return sendData.toString();
 
@@ -220,7 +262,7 @@ public class PlayersController
         }
         catch ( Exception e )
         {
-            String jsonString = generateMessageJson ( "ERROR", e.getMessage() );
+            String jsonString = generateMessageJson ( "ERROR 231 - ", e.getMessage() );
             JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
             return sendData.toString();
         }
@@ -229,10 +271,45 @@ public class PlayersController
 
     //DELETE / players / {id} / games: elimina las tiradas del jugador.
     @DeleteMapping (value = "/players/{playerId}/games")
-    public boolean deletePlayerRolls ( @PathVariable String playerId )
+    public String deletePlayerRolls ( @PathVariable String playerId )
     {
-        this.clearData ();
-        return false; //returns if they were deleted
+        try
+        {
+            this.clearData ();
+            //get the rolls id's
+            this.rolls = rollRepo.findAllByPlayerid( playerId );
+            Iterator iterator = rolls.iterator();
+            List<Integer> rollsIds = new ArrayList<>();
+            while ( iterator.hasNext() )
+            {
+                rollsIds.add( ((Roll)iterator.next()).getId() );
+            }
+            //erase the dices
+            if ( diceRepo.deleteByRollIds ( rollsIds ) )
+            {
+                //erase the rolls
+                if ( ! rollRepo.deleteByPlayerId ( playerId ) )
+                {
+                    String jsonString = generateMessageJson ( "ERROR", "Error 259 - The rolls were not deleted." );
+                    JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+                    return sendData.toString();
+                }
+            }
+            else
+            {
+                String jsonString = generateMessageJson ( "ERROR", "Error 266 - The dices were not deleted." );
+                JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+                return sendData.toString();
+            }
+            String jsonString = generateMessageJson ( "SUCCESS", "Rolls were erased successfully " );
+            JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+            return sendData.toString();
+        } catch (Exception e)
+        {
+            String jsonString = generateMessageJson ( "ERROR", "Error 275 - " + e.getMessage() );
+            JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+            return sendData.toString();
+        }
     }
 
     //GET / players / {id} / games: devuelve el listado de jugadas por un jugador.
@@ -240,31 +317,33 @@ public class PlayersController
     public String getPlayerRolls (@PathVariable String playerId )
     {
         this.clearData ();
-
-        //get player, rolls and dices info
-        this.singlePlayers = playerRepo.findByPlayerid( playerId );
-        this.rolls = rollRepo.findAllByPlayerid ( playerId );
-        Iterator iterator = this.rolls.iterator();
-        int thisRollId;
-
-        while ( iterator.hasNext() )
+        try
         {
-            thisRollId =  ((Roll)iterator.next()).getId();
-            try
+            //get player, rolls and dices info
+            this.singlePlayers = playerRepo.findByPlayerid( playerId );
+            this.rolls = rollRepo.findAllByPlayerid ( playerId );
+            Iterator iterator = this.rolls.iterator();
+            List<Integer> RollsIds = new ArrayList<>();
+            while ( iterator.hasNext() )
             {
-                dices = diceRepo.findByRollsId( thisRollId );
-                this.dices.addAll( dices );
-                dices.clear();
+                RollsIds.add( ( (Roll)iterator.next() ).getId() );
             }
-            catch (NullPointerException e)
-            {
-
-                String jsonString = generateMessageJson ( "ERROR", "Error 262 - " + e.getMessage() );
-                JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
-                return sendData.toString();
-            }
-
+            this.dices = diceRepo.findByRollsIds( RollsIds );
         }
+        catch (NullPointerException e)
+        {
+
+            String jsonString = generateMessageJson ( "ERROR", "Error 302 - " + e.getMessage() );
+            JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+            return sendData.toString();
+        }
+        catch ( Exception e )
+        {
+            String jsonString = generateMessageJson ( "ERROR", "Error 308 - " + e.getMessage() );
+            JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+            return sendData.toString();
+        }
+
         StringBuilder jsonString = new StringBuilder();
         jsonString.append(this.toString());
         JSONObject sendData = new JSONObject( "{" + jsonString.toString() + "}" );
@@ -277,7 +356,7 @@ public class PlayersController
         StringBuilder jsonString = new StringBuilder ("");
         if ( ( players != null ) && ( !players.isEmpty() ) )
         {
-            jsonString.append("\"Employes\": [");
+            jsonString.append("\"Player\": [");
             players.forEach( player -> jsonString.append( player.toString() + ", " ) );
             jsonString.delete(jsonString.length()-2 , jsonString.length());
             jsonString.append("]");
@@ -313,7 +392,7 @@ public class PlayersController
             {
                 jsonString.append(", ");
             }
-            jsonString.append("\"Employe\":");
+            jsonString.append("\"Player\":");
             jsonString.append( singlePlayers.toString() );
 
         }

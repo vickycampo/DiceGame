@@ -70,7 +70,7 @@
 		{
 			"name": "delete/players/ {id}",
 			"request": {
-				"url": "localhost:8080/players/aa09dd2d-91fb-4f72-91c9-ebaae40f6655",
+				"url": "localhost:8080/players/108bf6f4-dad5-4dbb-bbf8-d46f01456782",
 				"method": "DELETE",
 				"header": [
 					{
@@ -90,7 +90,7 @@
 		{
 			"name": "post/players/{id}/games/",
 			"request": {
-				"url": "localhost:8080/players/a48ffb69-5784-47ca-8a0c-4d27bf7e37fc/games/",
+				"url": "localhost:8080/players/47c275c0-b307-4e83-8297-99981034b9fa/games/",
 				"method": "POST",
 				"header": [
 					{
@@ -142,6 +142,86 @@
 				"body": {
 					"mode": "raw",
 					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get/players",
+			"request": {
+				"url": "localhost:8080/players",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get/players/ranking",
+			"request": {
+				"url": "localhost:8080/players/ranking",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get/players/ranking/loser",
+			"request": {
+				"url": "localhost:8080/players/ranking/loser",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "autogenerate",
+			"request": {
+				"url": "localhost:8080/autogenerate",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"\"\r\n}"
 				},
 				"description": ""
 			},
