@@ -1,14 +1,29 @@
 /* clear margin and padding */
-*
-{
+/* https://www.color-hex.com/color-palette/3686
+/*
+
+     #ff0000 	(255,0,0)
+	#bf0000 	(191,0,0)
+	#800000 	(128,0,0)
+	#400000 	(64,0,0)
+	#190000 	(0,0,0)
+
+
+
+*/
+
+
+*{
     margin: 0px;
     padding: 0px;
 }
-html
+html, body
 {
-    font-size: 10px;
-}
-body
-{
-    background-color: black;
+     width: 100vw;
+     height: 100vh;
+
+     font-size: 10px;
+
+     background-color: #190000 !important;
+
 }

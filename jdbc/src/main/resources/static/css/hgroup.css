@@ -1,0 +1,18 @@
+hgroup
+{
+     width: 100vw;
+     background-color: #400000;
+     text-align: center;
+}
+.burning-dice-logo
+{
+     font-size: 5rem;
+     line-height: 5rem;
+     vertical-align: text-bottom;
+}
+.burning-dice-logo img
+{
+     height: 15rem;
+     width: auto;
+     vertical-align: text-bottom;
+}
