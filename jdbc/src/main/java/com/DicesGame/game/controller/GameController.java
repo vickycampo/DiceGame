@@ -58,17 +58,29 @@ public class GameController
             try
             {
                 HashMap<String, Double> results = rollRepo.findAverageWins( playerId );
-
-                jsonString.append( "{");
-                jsonString.append( "\"PlayerId\":\"" + playerId + "\", ");
-                jsonString.append( "\"Wins\":\"" + results.get("WIN") + "\", ");
-                jsonString.append( "\"Loses\":\"" + results.get("LOST") + "\", ");
-                jsonString.append( "\"WinsPercentage\":\"" + results.get("AVG_WINS") + "\", ");
-                jsonString.append( "\"WinsPercentage\":\"" + results.get("AVG_LOSTS") + "\" ");
-                jsonString.append( "}, ");
-
-
+                if  ( results.size() != 0 )
+                {
+                    jsonString.append( "{");
+                    jsonString.append( "\"PlayerId\":\"" + playerId + "\", ");
+                    jsonString.append( "\"Wins\":\"" + results.get("WIN") + "\", ");
+                    jsonString.append( "\"Loses\":\"" + results.get("LOST") + "\", ");
+                    jsonString.append( "\"WinsPercentage\":\"" + results.get("AVG_WINS") + "\", ");
+                    jsonString.append( "\"LostPercentage\":\"" + results.get("AVG_LOSTS") + "\" ");
+                    jsonString.append( "}, ");
+                }
+                else
+                {
+                    jsonString.append( "{");
+                    jsonString.append( "\"PlayerId\":\"" + playerId + "\", ");
+                    jsonString.append( "\"Wins\":\"0\", ");
+                    jsonString.append( "\"Loses\":\"0\", ");
+                    jsonString.append( "\"WinsPercentage\":\"0\", ");
+                    jsonString.append( "\"LostPercentage\":\"0\" ");
+                    jsonString.append( "}, ");
+                }
                 jsonString.append("");
+
+
             }
             catch ( NullPointerException e )
             {
@@ -77,11 +89,20 @@ public class GameController
             }
 
         }
-        jsonString.delete(jsonString.length()-2 , jsonString.length());
-        jsonString.append("]");
+        try
+        {
+            jsonString.delete(jsonString.length()-2 , jsonString.length());
+            jsonString.append("]");
+            JSONObject sendData = new JSONObject( "{" + jsonString.toString() + "}" );
+            return sendData.toString();
+        }
+        catch ( Exception e )
+        {
+            String ErrorString = generateMessageJson ( "ERROR", "Error 101 - " +  e.getMessage());
+            JSONObject sendData = new JSONObject( "{" + ErrorString + "}" );
+            return sendData.toString();
+        }
 
-        JSONObject sendData = new JSONObject( "{" + jsonString.toString() + "}" );
-        return sendData.toString();
 
     }
 
@@ -91,8 +112,17 @@ public class GameController
     @GetMapping ( value="/players/ranking" )
     public String getAllPlayersRanking ()
     {
-        JSONObject sendData = new JSONObject( rollRepo.findAllAverageWins() );
-        return sendData.toString();
+        try
+        {
+            JSONObject sendData = new JSONObject( rollRepo.findAllAverageWins() );
+            return sendData.toString();
+        }
+        catch ( Exception e )
+        {
+            String jsonString = generateMessageJson ( "ERROR", "Error 122 - " +  e.getMessage());
+            JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
+            return sendData.toString();
+        }
     }
 
     //GET / players / ranking / loser: devuelve el jugador con peor porcentaje de éxito.
@@ -110,7 +140,7 @@ public class GameController
         }
         catch ( Exception e )
         {
-            String jsonString = generateMessageJson ( "ERROR", "Error 111 - " +  e.getMessage());
+            String jsonString = generateMessageJson ( "ERROR", "Error 131 - " +  e.getMessage());
             JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
             return sendData.toString();
         }

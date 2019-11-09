@@ -25,7 +25,9 @@ public class PlayerController
     private RollRepository rollRepo  = new RollRepository();
     private DiceRepository diceRepo  = new DiceRepository();
 
-    @GetMapping
+
+
+    @GetMapping ( value = "/players/home" )
     public String homePage (  )
     {
         try {
@@ -61,7 +63,7 @@ public class PlayerController
                 System.out.println("player id - " + playerId + " - randomPlays - " + randomPlays);
                 for (int i = 0; i < randomPlays ; i++)
                 {
-                    this.rollDices ( playerId );
+                    System.out.println( this.rollDices ( playerId ) );
 
                 }
 
@@ -207,24 +209,29 @@ public class PlayerController
     {
         this.clearData ();
         //set parameters for this game
-        int numberOfDices = 2;
+        int numberOfDices = 6;
         int min = 1;
         int max = 6;
         //throw the dices
         int[] results = new int[numberOfDices];
         int range = (max - min) + 1;
-        int sum = 0;
+
+        boolean wonGame = true;
         for (int i = 0; i < numberOfDices; i++)
         {
             do
             {
                 results[i] = (int) (Math.random() * range) + min;
+                if ((results[i] != 5)&&(results[i] != 6))
+                {
+                    wonGame = false;
+                }
             } while ( (results[i] < min ) || (results[i] > max ) );
-            sum += results[i];
+
         }
         //check the result - win - the sum is 7 / lose anything else.
         String result;
-        if ( sum == 7)
+        if ( wonGame )
         {
             result = "WIN";
         }

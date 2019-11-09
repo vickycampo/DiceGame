@@ -120,14 +120,20 @@ public class RollRepository
                 (resultSet, rowNum) -> results.put(resultSet.getString("result") , resultSet.getDouble("plays")));
         if ( results.size() > 0 )
         {
-            double wins = results.get("WIN");
-            double loses = results.get("LOST");
+            double wins = 0;
+            double loses = 0;
+            if ( results.get("WIN") != null )
+                wins = results.get("WIN");
+            if ( results.get("LOST") != null )
+                loses = results.get("LOST");
             double total = wins + loses;
 
             double averageWins = (wins*100 / total);
             double averageLosts = (loses*100 / total);
+
             results.put("AVG_WINS" , averageWins);
             results.put("AVG_LOSTS" , averageLosts);
+            System.out.println( "Before Send - " + results);
             return results;
         }
         else {
@@ -143,8 +149,15 @@ public class RollRepository
                 (resultSet, rowNum) -> results.put(resultSet.getString("result") , resultSet.getInt("plays")));
         if ( results.size() > 0 )
         {
-            int wins = results.get("WIN");
-            int loses = results.get("LOST");
+
+            int wins = 0;
+            int loses = 0;
+
+            if ( results.get("WIN") != null)
+                wins = results.get("WIN");
+            if ( results.get("LOST") != null)
+                loses = results.get("LOST");
+
             int total = wins + loses;
 
             double averageWins = (wins*100 / total);
@@ -158,7 +171,7 @@ public class RollRepository
         }
         else
         {
-            return "";
+            return "{}";
         }
     }
     public String findBiggestLoser ( List<String> playersIds )
@@ -171,12 +184,16 @@ public class RollRepository
         {
             String playerId = iterator.next().toString();
             results = this.findAverageWins ( playerId );
-            //look for the lowest AVG_LOSTS
-            if ( ( oldAVG == -1 ) || ( results.get("AVG_LOSTS") < oldAVG) )
+            if ( results.size() != 0 )
             {
-                oldAVG = results.get("AVG_LOSTS");
-                biggestLoserId = playerId;
+                //look for the lowest AVG_LOSTS
+                if ( ( biggestLoserId == "" ) || ( results.get("AVG_LOSTS") > oldAVG) )
+                {
+                    oldAVG = results.get("AVG_LOSTS");
+                    biggestLoserId = playerId;
+                }
             }
+
         }
         StringBuilder jsonString = new StringBuilder();
         jsonString.append( "{");
@@ -196,12 +213,19 @@ public class RollRepository
         {
             String playerId = iterator.next().toString();
             results = this.findAverageWins ( playerId );
-            //look for the lowest AVG_LOSTS
-            if ( ( oldAVG == -1 ) || ( results.get("AVG_WINS") < oldAVG) )
+            System.out.println( "After Send - " + results);
+            if ( results.size() != 0 )
             {
-                oldAVG = results.get("AVG_WINS");
-                biggestWinnerId = playerId;
+                //look for the lowest AVG_WINS
+                System.out.println( "oldAVG - " + oldAVG + " - AVG_WINS - " +  results.get("AVG_WINS"));
+                if ( ( biggestWinnerId == "" ) || ( results.get("AVG_WINS") > oldAVG) )
+                {
+                    oldAVG = results.get("AVG_WINS");
+                    biggestWinnerId = playerId;
+                    System.out.println( "oldAVG - " + oldAVG );
+                }
             }
+
         }
         StringBuilder jsonString = new StringBuilder();
         jsonString.append( "{");
