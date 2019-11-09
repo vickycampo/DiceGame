@@ -1,18 +1,29 @@
 hgroup
 {
-     width: 100vw;
-     background-color: #400000;
+     width: 100%;
      text-align: center;
 }
 .burning-dice-logo
 {
-     font-size: 5rem;
-     line-height: 5rem;
+}
+.burning-dice-logo
+{
+     display: inline-block;
+     padding-top: 2.5rem;
+     padding-bottom: 2.5rem;
      vertical-align: text-bottom;
+     width: 20rem;
+     height: 20rem;
+     text-align: center;
 }
 .burning-dice-logo img
 {
      height: 15rem;
      width: auto;
      vertical-align: text-bottom;
+
+}
+hgroup h1, h2
+{
+     color: #d6d6d6;
 }

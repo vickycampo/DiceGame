@@ -15,34 +15,59 @@
 </head>
 <body>
     <!-- The loggin menu -->
-    <header>
-        <nav id="user-bar">
+    <header class="sticky-top">
+        <nav id="manage-player">
             <ul>
-                <li>New Player</li>
-                <li>Login</li>
+                 <li id="manage-player__newPlayer">Manage Players</li>
+                 <!-- Create Player -->
+                 <!-- Modify Player -->
+                <li id="manage-player__deletePlayer">Exit</li>
+                <!-- Delete Player -->
             </ul>
         </nav>
     </header>
-    <!-- Navigation menu -->
-    <nav>
-          <ul>
-               <li>New Player</li>
-               <li>Login</li>
-          </ul>
-    </nav>
     <!-- Company information -->
     <hgroup>
-        <h1 class="burning-dice-logo">Burning<img src="img/BurningDiceLogo.svg"></img>Dice</h1>
+         <div class="burning-dice-logo"><img src="img/orange-logo.svg"></img></div>
+        <h1>Burning Dice</h1>
         <h2>The Game</h2>
     </hgroup>
-
     <!-- Content of the page-->
-    <section>
+    <section id="dice-roll">
 
         <header>
 
         </header>
-        <article>
+        <article id="dice-roll__rollDices">
+
+        </article>
+        <article id="dice-roll__deleteRolls">
+
+        </article>
+        <footer>
+
+        </footer>
+    </section>
+    <section id="statistics">
+
+        <header>
+
+        </header>
+        <article id="statistics__plays--allplayers">
+             <!-- returns the list of all the players in the system with their average percentage of hits -->
+
+        </article>
+        <article id="statistics__plays--thisplayers">
+             <!-- returns the list of plays by a player. -->
+
+        </article>
+        <article id="statistics__average--allplayers">
+             <!-- returns the average ranking of all players in the system. That is, the average percentage of achievements.r. -->
+
+        </article>
+        <article id="statistics__average--biggest">
+             <!-- returns the player with the worst percentage of success. -->
+             <!-- returns the player with the worst percentage of success. -->
 
         </article>
         <footer>

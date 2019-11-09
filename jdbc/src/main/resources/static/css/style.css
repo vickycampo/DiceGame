@@ -1,13 +1,16 @@
 /* clear margin and padding */
-/* https://www.color-hex.com/color-palette/3686
+/* https://www.colorhexa.com/121212
 /*
 
-     #ff0000 	(255,0,0)
-	#bf0000 	(191,0,0)
-	#800000 	(128,0,0)
-	#400000 	(64,0,0)
-	#190000 	(0,0,0)
+     dark grey: #080808
+     middle grey: #121212
+     middle grey: #393939
+     middle grey: #7E7E7E
+     light grey: #F4F4F4
+     white: #d6d6d6
 
+     purple: #BB86FC
+     orange: #F48226
 
 
 */
@@ -17,13 +20,25 @@
     margin: 0px;
     padding: 0px;
 }
-html, body
+html,body
 {
      width: 100vw;
      height: 100vh;
-
      font-size: 10px;
 
-     background-color: #190000 !important;
+     background-color: #080808 !important;
+     padding: 2rem;
+
+}
+body
+{
+     border-radius: 25px;
+     background-color: #121212 !important;
+
+     padding: 0px;
+     font-size: 10px;
+     width: 100%;
+     height: 100%;
+
 
 }

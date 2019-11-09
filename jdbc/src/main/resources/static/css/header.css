@@ -1,4 +1,28 @@
-header
+#manage-player
 {
-     background-color: #121212;
+     text-align: right;
+
+}
+#manage-player ul
+{
+     margin-bottom: 0px;
+     list-style-type: none;
+     width: 100%;
+     text-align: right;
+     padding-right: 2rem;
+     padding-top: 1rem;
+}
+
+#manage-player ul li
+{
+     color: #d6d6d6;
+     font-size: 1.25rem;
+     display: inline-block;
+     margin-left: .5rem;
+     margin-right: .5rem;
+     cursor: pointer;
+}
+#manage-player ul li:hover
+{
+     color: #F48226;
 }
