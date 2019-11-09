@@ -1,0 +1,14 @@
+/* clear margin and padding */
+*
+{
+    margin: 0px;
+    padding: 0px;
+}
+html
+{
+    font-size: 10px;
+}
+body
+{
+    background-color: black;
+}
