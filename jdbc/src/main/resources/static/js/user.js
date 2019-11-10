@@ -1,35 +1,35 @@
 class userClass  {
      constructor ( )
      {
+
+
+
           this.userName = "";
           this.userId = "";
-          this.createUser = function () {
-               alert ("Creating user");
+          this.createUser = function ()
+          {
+               var myAjax = new myAjaxClass();
+               var localURL = window.location.href;
+
+               var method = "GET";
+               var url = "/players/home";
+               var body = "";
+
+               myAjax.createRequestObj();
+               myAjax.configureRequesObj( method , url , body );
+
+               
           };
           this.deleteUser = function () {
-               alert ("Delete User");
+               console.log ("Delete User");
           };
           this.addEvents = function ()
           {
-               document.getElementById( 'manage-player__newPlayer' ).addEventListener( 'click' , clickUserMenu );
-               document.getElementById( 'manage-player__deletePlayer' ).addEventListener( 'click' , clickUserMenu );
+
+               document.getElementById( 'manage-player__newPlayer' ).addEventListener( 'click' , this.createUser );
+               document.getElementById( 'manage-player__deletePlayer' ).addEventListener( 'click' , this.deleteUser );
 
           }
      }
 
 };
-
-/* Events functions */
-function clickUserMenu(event)
-{
-     var id = event.target.id;
-     console.log ( id );
-     if ( id == "manage-player__newPlayer")
-     {
-
-     }
-     else if ( id == "manage-player__deletePlayer")
-     {
-
-     }
-}

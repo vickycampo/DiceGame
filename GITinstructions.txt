@@ -9,3 +9,8 @@ git push -u origin master
 ```
 SET GLOBAL time_zone = '-3:00';
 ```
+
+## Fix the port of XAMPP
+```
+https://addons.mozilla.org/en-US/firefox/addon/access-control-allow-origin/
+```

@@ -1,3 +1,5 @@
+var ajaxRequest;
+
 class myAjaxClass
 {
      /*
@@ -13,28 +15,28 @@ class myAjaxClass
      */
      constructor ( )
      {
-          this.ajaxRequest;  // The variable that makes Ajax possible!
+
           //2. An XMLHttpRequest object is created.
           this.createRequestObj = function ()
           {
                try
                {
                     // Opera 8.0+, Firefox, Safari
-                    this.ajaxRequest = new XMLHttpRequest();
+                    ajaxRequest = new XMLHttpRequest();
                }
                catch (e)
                {
                     // Internet Explorer Browsers
                     try
                     {
-                         this.ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                         ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
                     }
                     catch (e)
                     {
 
                          try
                          {
-                              this.ajaxRequest = new ActiveXObject( "Microsoft.XMLHTTP" );
+                              ajaxRequest = new ActiveXObject( "Microsoft.XMLHTTP" );
                          }
                          catch (e)
                          {
@@ -56,40 +58,20 @@ class myAjaxClass
                           - true: a completed transaction is provided using event listeners
                */
                // Here processRequest() is the callback function.
-               this.ajaxRequest.onreadystatechange = this.processRequest (this.ajaxRequest);
-               this.ajaxRequest.open( method , url );
-               this.ajaxRequest.send( body );
-          }
-          this.processRequest = function ( )
-          {
-               //The request is completed.
-               console.log ( this.ajaxRequest );
-               if (this.ajaxRequest.readyState == 4)
+               url = "http://localhost:8080/" + url;
+               ajaxRequest.onreadystatechange = function ()
                {
-                    //DONE: 200
-                    if (this.ajaxRequest.status == 200)
+                    if (this.readyState == 4 && this.status == 200)
                     {
-                         if(this.ajaxRequest.readyState == this.ajaxRequest.HEADERS_RECEIVED)
-                         {
-                              // Get the raw header string
-                              var headers = this.ajaxRequest.getAllResponseHeaders();
-                              // Convert the header string into an array
-                              // of individual headers
-                              var arr = headers.trim().split(/[\r\n]+/);
-                              // Create a map of header names to values
-                              var headerMap = {};
-                              arr.forEach(function (line)
-                              {
-                                   var parts = line.split(': ');
-                                   var header = parts.shift();
-                                   var value = parts.join(': ');
-                                   headerMap[header] = value;
-                              });
-                              var contentType = headerMap["content-type"];
-                              console.log (contentType);
-                         }
+                         console.log (this.response);
+                         var jsonObj = JSON.parse( this.response );
+                         console.log (jsonObj);
                     }
-               }
+               };
+               ajaxRequest.open( method , url );
+               ajaxRequest.setRequestHeader('Content-Type','application/x-www-form-   urlencoded');
+               ajaxRequest.send( body );
           }
+
      };
 };
