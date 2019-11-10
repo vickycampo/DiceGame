@@ -15,7 +15,7 @@
 
 #manage-player ul li
 {
-     color: #d6d6d6;
+     color: #C2D4E4;
      font-size: 1.25rem;
      display: inline-block;
      margin-left: .5rem;
@@ -24,5 +24,5 @@
 }
 #manage-player ul li:hover
 {
-     color: #F48226;
+     color: #D16A24;
 }

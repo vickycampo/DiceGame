@@ -2,15 +2,17 @@
 /* https://www.colorhexa.com/121212
 /*
 
-     dark grey: #080808
-     middle grey: #121212
-     middle grey: #393939
-     middle grey: #7E7E7E
-     light grey: #F4F4F4
-     white: #d6d6d6
+     Grey Scale:
+      - #09080A
+      - #2A2A28
+      - #414142
+      - #595C60
+      - #777C83
+      - #9AA5B1
+      - #C2D4E4
 
-     purple: #BB86FC
-     orange: #F48226
+
+     orange: #CB6120
 
 
 */
@@ -26,14 +28,14 @@ html,body
      height: 100vh;
      font-size: 10px;
 
-     background-color: #080808 !important;
+     background-color: #09080A !important;
      padding: 2rem;
 
 }
 body
 {
      border-radius: 25px;
-     background-color: #121212 !important;
+     background-color: #2A2A28 !important;
 
      padding: 0px;
      font-size: 10px;

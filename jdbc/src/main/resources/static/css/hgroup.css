@@ -2,28 +2,41 @@ hgroup
 {
      width: 100%;
      text-align: center;
+     height: 90vh;
+     width: 90vw;
 }
-.burning-dice-logo
-{
-}
+
 .burning-dice-logo
 {
      display: inline-block;
      padding-top: 2.5rem;
      padding-bottom: 2.5rem;
      vertical-align: text-bottom;
-     width: 20rem;
-     height: 20rem;
+
      text-align: center;
+     height: 80%;
 }
 .burning-dice-logo img
 {
-     height: 15rem;
+     height: 100%;
      width: auto;
      vertical-align: text-bottom;
 
 }
+hgroup .titles
+{
+     height: 20%;
+}
 hgroup h1, h2
 {
-     color: #d6d6d6;
+     color: #C2D4E4;
+      text-shadow: 1px 1px #121212;
+}
+hgroup h1
+{
+     font-size: 5vh;
+}
+hgroup h2
+{
+     font-size: 2.5vh;
 }
