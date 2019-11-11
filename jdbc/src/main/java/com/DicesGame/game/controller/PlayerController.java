@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+
+@CrossOrigin(maxAge = 3600)
 @RestController
+@RequestMapping("/")
 public class PlayerController
 {
     private List<Player> players;
@@ -27,7 +29,7 @@ public class PlayerController
     private DiceRepository diceRepo  = new DiceRepository();
 
 
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping ( value = "/players/home" )
     public String homePage (  )
     {
@@ -44,6 +46,8 @@ public class PlayerController
             return sendData.toString();
         }
     }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping (value ="/autogenerate")
     public String autogenerate ()
     {
@@ -78,6 +82,7 @@ public class PlayerController
     }
 
     //POST: /players: crea un jugador
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping ( value = "/players" )
     public String createPlayer ( @RequestBody String dataString )
     {
@@ -126,6 +131,7 @@ public class PlayerController
 
     //PUT / players: modifica el nombre del jugador
     //@RequestMapping( value = "/employees", produces = "application/json", method = {RequestMethod.PUT})
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping  ( value = "/players" )
     public String modifyPlayer ( @RequestBody String dataString )
     {
@@ -171,6 +177,7 @@ public class PlayerController
         }
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping (value = "/players/{playerId}")
     public String deletePlayer ( @PathVariable String playerId )
     {
@@ -205,6 +212,7 @@ public class PlayerController
     }
 
     //POST / players / {id} / games /: un jugador específico realiza una tirada de los dados.
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping (value = "/players/{playerId}/games")
     public String rollDices ( @PathVariable String playerId )
     {
@@ -278,6 +286,7 @@ public class PlayerController
     }
 
     //DELETE / players / {id} / games: elimina las tiradas del jugador.
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping (value = "/players/{playerId}/games")
     public String deletePlayerRolls ( @PathVariable String playerId )
     {
@@ -322,6 +331,7 @@ public class PlayerController
 
     //GET / players / {id} / games: devuelve el listado de jugadas por un jugador.
     @GetMapping (value = "/players/{playerId}/games")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public String getPlayerRolls (@PathVariable String playerId )
     {
         this.clearData ();

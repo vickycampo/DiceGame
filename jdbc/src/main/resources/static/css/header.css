@@ -5,7 +5,9 @@ header
 #manage-player--menu
 {
      text-align: right;
-
+     z-index: 998;
+     border-color: blue;
+     border-width: 2px;
 }
 #manage-player--menu ul
 {

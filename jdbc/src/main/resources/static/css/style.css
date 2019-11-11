@@ -27,20 +27,19 @@ html,body
 {
      font-size: 10px;
      background-color: #09080A !important;
-     margin: 2rem;
+     font-size: 10px;
+     width: calc(100vw - ((100vw - 100%)/2));
+     height: calc(100vh - ((100vh - 100%)/2));
+     padding: 2rem;
+
 }
 body
 {
-     border-radius: 25px;
+     border-radius: 5px;
      background-color: #2A2A28 !important;
-
-     padding: 0px;
-     font-size: 10px;
-     max-width: calc(100vw - ((100vw - 100%)/2) - 4rem);
-     max-height: calc(100vh - ((100vh - 100%)/2) - 4rem);
+     width: calc(100vw - ((100vw - 100%)/2) - 3.45rem);
      height: calc(100vh - ((100vh - 100%)/2) - 4rem);
-
-
+     padding: 0.5rem;
 }
 ul, #ul, .ul
 {

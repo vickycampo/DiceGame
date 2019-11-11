@@ -1,5 +1,4 @@
-var userName = "";
-var userId = "";
+
 
 function addEventsUser()
 {
@@ -7,52 +6,149 @@ function addEventsUser()
   var exitLINK = document.getElementById('manage-player--menu__deletePlayer');
   registerLINK.addEventListener( 'click' , showHideForm );
   exitLINK.addEventListener( 'click', deleteUser );
-  showHideButons( userId );
+
 }
 
 function createUser()
 {
-  userName = document.getElementById('playerName').value;
+     userName = document.getElementById('playerName').value;
+     if ( userName != "")
+     {
+          var localURL = window.location.href;
+          var method = "POST";
+          var url = "/players";
+          var body = JSON.stringify({"name": userName});
 
-  if ( userName != "")
-  {
-    var myAjax = new myAjaxClass();
-    var localURL = window.location.href;
+          createRequestObj();
+          configureRequesObj( method , url , body , "createUserReturn ( jsonObj )");
+     }
+     else
+     {
+          document.getElementById('userErrorMessage').textContent = "Name is missing.";
 
-    var method = "GET";
-    var url = "/players/home";
-    var body = "";
+          document.getElementById('userErrorMessage').classList.add ("show-error");
+     }
 
-    myAjax.createRequestObj();
-    myAjax.configureRequesObj( method , url , body );
-    showHideButons( userId );
-    showHideForm();
-  }
-  else
-  {
-    console.log (userName);
-    document.getElementById('userErrorMessage').textContent = "Name is missing.";
 
-    document.getElementById('userErrorMessage').classList.add ("show-error");
-  }
+}
+function createUserReturn ( JsonReturn )
+{
+
+     var type = JsonReturn["Message"]["Type"];
+     var message = JsonReturn["Message"]["Message"];
+     userId = JsonReturn["playerId"];
+
+     if ( type == "ERROR")
+     {
+          document.getElementById('userErrorMessage').textContent = "Name already in use.";
+          document.getElementById('userErrorMessage').classList.remove ("show-success");
+          document.getElementById('userErrorMessage').classList.add ("show-error");
+     }
+     else if ( type == "SUCCESS")
+     {
+          document.getElementById('userErrorMessage').textContent = "Welcome " + userName;
+          document.getElementById('userErrorMessage').classList.add ("show-success");
+          document.getElementById('userErrorMessage').classList.remove ("show-error");
+
+          sessionStorage.setItem("userName", userName);
+          sessionStorage.setItem("userId", userId);
+
+          var delayInMilliseconds = 500;
+          setTimeout(function()
+          {
+               showHideForm();
+               doYouWantToRolldice();
+          }, delayInMilliseconds);
+
+
+     }
 
 
 }
 
+function modifyUser()
+{
+     userName = document.getElementById('playerName').value;
+     if ( userName != "")
+     {
+          var localURL = window.location.href;
+          var method = "PUT";
+          var url = "/players";
+          var body = JSON.stringify({"name": userName, "playerId": userId});
+
+          createRequestObj();
+          configureRequesObj( method , url , body , "modifyUserReturn ( jsonObj )");
+     }
+     else
+     {
+          document.getElementById('userErrorMessage').textContent = "Name is missing.";
+
+          document.getElementById('userErrorMessage').classList.add ("show-error");
+     }
+}
+function modifyUserReturn( JsonReturn )
+{
+     console.log ("Modify User Return");
+     var type = JsonReturn["Message"]["Type"];
+     var message = JsonReturn["Message"]["Message"];
+
+
+     if ( type == "ERROR")
+     {
+          document.getElementById('userErrorMessage').textContent = "New name already in use.";
+          document.getElementById('userErrorMessage').classList.remove ("show-success");
+          document.getElementById('userErrorMessage').classList.add ("show-error");
+     }
+     else if ( type == "SUCCESS")
+     {
+          document.getElementById('userErrorMessage').textContent = "Name is changed";
+          document.getElementById('userErrorMessage').classList.add ("show-success");
+          document.getElementById('userErrorMessage').classList.remove ("show-error");
+          sessionStorage.setItem("userName", userName);
+          var delayInMilliseconds = 500;
+          setTimeout(function()
+          {
+               showHideForm();
+          }, delayInMilliseconds);
+     }
+}
 function deleteUser()
 {
-  console.log ("Delete User");
-  showHideButons( userId );
+     console.log ("Delete User");
+     var localURL = window.location.href;
+     var method = "DELETE";
+     var url = "/players/" + userId;
+     var body = JSON.stringify({"name": userName});
+
+     createRequestObj();
+     configureRequesObj( method , url , body , "deleteUserReturn ( jsonObj )");
+
+
 }
-
-
-function showHideButons( userId )
+function deleteUserReturn( JsonReturn )
 {
-  console.log ("showHideButons");
-  console.log (userId);
+     var type = JsonReturn["Message"]["Type"];
+     var message = JsonReturn["Message"]["Message"];
+     if ( type == "ERROR")
+     {
+          alert (message);
+     }
+     else if ( type == "SUCCESS")
+     {
+          sessionStorage.clear();
+          userId = "";
+          userName = "";
+          swapRegisterItem();
+          //hide all layers
+          document.getElementById('dice-roll').classList.add("hide");
+          document.getElementById('dice-roll').classList.remove("show");
+          console.log (document.getElementById('dice-roll').classList);
+     }
+}
+function showHideButons()
+{
   var modifyPlayerBTN = document.getElementById( 'modifyPlayer' );
   var createPlayerBTN = document.getElementById( 'createPlayer' );
-
   /* Show hide buttons */
   if (userId == "")
   {
@@ -69,7 +165,8 @@ function showHideButons( userId )
 };
 function showHideForm()
 {
-  console.log ("showHideForm");
+  showHideButons();
+  swapRegisterItem();
   var formContainer = document.getElementById('manage-player__form--container');
   /* Show / hide form */
   if (formContainer.classList.contains( "show" ))
@@ -81,7 +178,21 @@ function showHideForm()
   {
     formContainer.classList.remove ("hide");
     formContainer.classList.add ("show");
+    document.getElementById('playerName').value = userName;
   }
   document.getElementById('userErrorMessage').textContent = " "
 
 };
+function swapRegisterItem()
+{
+     if (userId != "")
+     {
+          document.getElementById('manage-player--menu__newPlayer').textContent = "Modify Player";
+          document.getElementById("manage-player--menu__deletePlayer").style.display="inline-block";
+     }
+     else if (userId == "")
+     {
+          document.getElementById('manage-player--menu__newPlayer').textContent = "Register";
+          document.getElementById("manage-player--menu__deletePlayer").style.display="none";
+     }
+}

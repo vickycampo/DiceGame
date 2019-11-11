@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Burning Dice</title>
     <!-- Local Styles -->
+    <link rel="stylesheet" type="text/css" href="css/dice-roll.css">
     <link rel="stylesheet" type="text/css" href="css/generic.css">
     <link rel="stylesheet" type="text/css" href="css/header.css">
     <link rel="stylesheet" type="text/css" href="css/hgroup.css">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="css/shadows.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- Local JavaScript -->
+    <script src="js/dice-roll.js"></script>
     <script src="js/myAjax.js"></script>
     <script src="js/user.js"></script>
     <!-- Bootstrap Files -->
@@ -19,11 +21,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
-          var user;
-          var myAjax;
+          var userName = "";
+          var userId = "";
+
           function enqueueScripts()
           {
+               //Get Stored values
+               if (( sessionStorage.getItem("userName") != null )&&( sessionStorage.getItem("userName") != "" ))
+               {
+                    userName = sessionStorage.getItem("userName");
+
+               }
+               else
+               {
+                    sessionStorage.setItem("userName", userName);
+               }
+
+               if (( sessionStorage.getItem("userId") != null )&&( sessionStorage.getItem("userId") != "" ))
+               {
+                    userId = sessionStorage.getItem("userId");
+                    document.getElementById('dice-roll').classList.add("show");
+                    document.getElementById('dice-roll').classList.remove("hide");
+               }
+               else
+               {
+                    sessionStorage.setItem("userId", userId);
+               }
+               swapRegisterItem();
+               var ajaxRequest;
+               var jsonObj;
                addEventsUser();
+
           }
      </script>
 </head>
@@ -55,17 +83,19 @@
 <!-- Company information -->
 
 <hgroup>
-  <div>
-    content
-  </div>
+
 </hgroup>
+
 <!-- Content of the page-->
-<section id="dice-roll">
+<section id="dice-roll" class="dice-roll hide">
 
     <header>
 
     </header>
     <article id="dice-roll__rollDices">
+
+    </article>
+    <article id="dice-roll__stats">
 
     </article>
     <article id="dice-roll__deleteRolls">

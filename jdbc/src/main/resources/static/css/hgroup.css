@@ -1,19 +1,18 @@
 hgroup
 {
-  width: calc(100vw - ((100vw - 100%)/2) - 4rem);
-  height: calc(100vh - ((100vh - 100%)/2) - 4rem);
-  text-align: center;
+     height: calc(100vh - ((100vh - 100%)/2) - 6.5rem);
+     text-align: center;
 }
 
 .burning-dice-logo
 {
-  display: inline-block;
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
-  vertical-align: text-bottom;
+     display: inline-block;
+     padding-top: 2.5rem;
+     padding-bottom: 2.5rem;
+     vertical-align: text-bottom;
 
-  text-align: center;
-  height: 80%;
+     text-align: center;
+     height: 80%;
 }
 .burning-dice-logo img
 {

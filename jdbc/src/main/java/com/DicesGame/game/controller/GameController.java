@@ -7,6 +7,7 @@ import com.DicesGame.game.model.Dice;
 import com.DicesGame.game.model.Player;
 import com.DicesGame.game.model.Roll;
 import org.json.JSONObject;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +31,7 @@ public class GameController
 
     //GET / players /:
     // devuelve el listado de todos los jugadores del sistema con su porcentaje medio de éxitos
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping ( value = "/players")
     public String getPlayersStatistics (  )
     {
@@ -109,6 +111,7 @@ public class GameController
     //GET / players / ranking:
     // devuelve el ranking medio de todos los jugadores del sistema.
     // Es decir, el porcentaje medio de éxitos.
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping ( value="/players/ranking" )
     public String getAllPlayersRanking ()
     {
@@ -126,6 +129,7 @@ public class GameController
     }
 
     //GET / players / ranking / loser: devuelve el jugador con peor porcentaje de éxito.
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping ( value="/players/ranking/loser" )
     public String getBiggestLoser ()
     {
@@ -148,6 +152,7 @@ public class GameController
     }
 
     //GET / players / ranking / winner: devuelve el jugador con mejor porcentaje de éxito.
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping ( value="/players/ranking/winner" )
     public String getBiggestWinner ()
     {
