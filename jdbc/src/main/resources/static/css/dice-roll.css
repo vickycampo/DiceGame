@@ -1,13 +1,11 @@
 .dice-roll
 {
-     width: calc(100vw - ((100vw - 100%)/2) - 6.5rem);
-     height: calc(100vh - ((100vh - 100%)/2) - 10.5rem);
-     text-align: center;
      position:absolute;
-     top: 6rem;
-     background-color: #2A2A28;
+     background-color: #26465f;
      display:none;
      opacity: 0;
+     border-radius: 5px;
+     padding: 2rem;
 }
 .dice-roll.hide
 {
@@ -17,7 +15,178 @@
 }
 .dice-roll.show
 {
-     display: block !important;
      opacity: 1 !important;
+     display: grid;
+     grid-template-columns: 25% 25% 25% auto;
+     grid-template-rows: 60% 35% auto;
+     grid-column-gap: 1.5rem;
+     grid-row-gap: 1.5rem;
+}
+.grid-getItem
+{
+     /* Box Display */
+     border-radius: 5px;
+     background-color: #3a698f;
+     padding: 0rem;
 
+     /* Inner Shadow */
+     -moz-box-shadow:    inset 0 0 1px #13232f;
+     -webkit-box-shadow: inset 0 0 1px #13232f;
+     box-shadow:         inset 0 0 1px #13232f;
+}
+/* Header */
+.dice-roll__header
+{
+     /* Visual Styling */
+     background-color:#CB6120;
+
+     /* Grid Layout */
+     grid-column-start: 1;
+     grid-column-end: 2;
+     grid-row-start: 1;
+     grid-row-end: 3;
+}
+/* Rolling Section */
+.dice-roll__rollDices
+{
+     /* Grid Layout */
+     grid-column-start: 2;
+     grid-column-end: 5;
+
+     grid-row-start: 1;
+     grid-row-end: 2;
+
+     /* new Grid */
+     display: grid;
+     grid-column-gap: .5rem;
+     grid-row-gap: .5rem;
+     grid-template-columns: 100%;
+     grid-template-rows: auto auto;
+
+}
+/* Dices */
+.dice-roll__rollDices--diceContainer
+{
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     justify-content: center;  /* Horizontal */
+     align-items: flex-start; /* Vertical */
+     align-content: space-evenly; /*Horizontal the content*/
+     margin:1rem;
+
+}
+.dice-roll__rollDices--dices
+{
+     background-color: #13232f;
+     min-width: 70px;
+     min-height: 70px;
+
+     max-width: 150px;
+     max-height: 150px;
+
+     border-radius: 50%;
+     border-style: solid;
+     border-width: 1rem;
+     border-color:#26465f;
+
+     width: 10vw;
+     height: 10vw;
+     margin:1rem;
+
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     justify-content: center;  /* Horizontal */
+     align-items: center; /* Vertical */
+     align-content: center; /*Horizontal the content*/
+
+}
+.dice-roll__rollDices--dices img
+{
+
+}
+
+/* Button Section */
+.dice-roll__rollDices--btnDiv
+{
+     /* Display in the parent gris */
+     grid-column-start: 1;
+     grid-column-end: 2;
+     grid-row-start: 2;
+     grid-row-end: 3;
+     vertical-align: middle;
+
+     /* Display of the content */
+     text-align: center;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     cursor: pointer;
+}
+.dice-roll__rollDices--btn
+{
+     /* button */
+     display: inline-block;
+     border-radius: 25px;
+     background-color: #CB6120;
+     line-height: 4.5rem;
+     width: 20rem;
+     vertical-align: middle;
+     border: none;
+
+     /* Text */
+     font-size: 2rem;
+     color: #26465f;
+     font-weight: bolder;
+
+     /* Movemnt */
+     transition-property: position;
+     transition-duration: .5s;
+
+}
+.dice-roll__rollDices--btn:hover
+{
+     /* Shadow Styles */
+     -webkit-box-shadow: 0 2px 2px #26465f;
+     -moz-box-shadow: 0 2px 2px #26465f;
+     box-shadow: 0 2px 2px #26465f;
+     /* position */
+     transform: translateY(-2px);
+}
+.dice-roll__rollDices--btn:active
+{
+     /* Shadow Styles */
+     -webkit-box-shadow: 0 0px 0px #26465f;
+     -moz-box-shadow: 0 0px 0px #26465f;
+     box-shadow: 0 0px 0px #26465f;
+     /* position */
+     transform: translateY(0px);
+}
+/* All Plays */
+.dice-roll__allPlays
+{
+     /* grid */
+     grid-column-start: 2;
+     grid-column-end:3;
+     grid-row-start: 2;
+     grid-row-end: 3;
+}
+/* stats */
+.dice-roll__stats
+{
+     /* grid */
+     grid-column-start: 3;
+     grid-column-end:4;
+     grid-row-start: 2;
+     grid-row-end: 3;
+}
+/* deleteRolls */
+.dice-roll__deleteRolls
+{
+     /* grid */
+     grid-column-start: 4;
+     grid-column-end:5;
+     grid-row-start: 2;
+     grid-row-end: 3;
 }

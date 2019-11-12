@@ -139,10 +139,7 @@ function deleteUserReturn( JsonReturn )
           userId = "";
           userName = "";
           swapRegisterItem();
-          //hide all layers
-          document.getElementById('dice-roll').classList.add("hide");
-          document.getElementById('dice-roll').classList.remove("show");
-          console.log (document.getElementById('dice-roll').classList);
+          stopRolling ();
      }
 }
 function showHideButons()

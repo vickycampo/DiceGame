@@ -3,17 +3,17 @@
 /*
 
      Grey Scale:
-      - #09080A
-      - #2A2A28
-      - #414142
-      - #595C60
-      - #777C83
-      - #9AA5B1
-      - #C2D4E4
+      - #09080A - #13232f
+      - #2A2A28 - #26465f
+      - #414142 - #3a698f
+      - #595C60 - #4d8cbf
+      - #777C83 - #61afef
+      - #9AA5B1 - #80bff2
+      - #C2D4E4 - #eff7fd
 
 
      orange: #CB6120
-     green: #4BAD9F
+     green: #4BAD9F - #56b6c2
 
 
 */
@@ -26,7 +26,7 @@
 html,body
 {
      font-size: 10px;
-     background-color: #09080A !important;
+     background-color: #13232f !important;
      font-size: 10px;
      width: calc(100vw - ((100vw - 100%)/2));
      height: calc(100vh - ((100vh - 100%)/2));
@@ -36,7 +36,7 @@ html,body
 body
 {
      border-radius: 5px;
-     background-color: #2A2A28 !important;
+     background-color: #26465f !important;
      width: calc(100vw - ((100vw - 100%)/2) - 3.45rem);
      height: calc(100vh - ((100vh - 100%)/2) - 4rem);
      padding: 0.5rem;
