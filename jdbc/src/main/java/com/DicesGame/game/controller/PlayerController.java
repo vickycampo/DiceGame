@@ -189,6 +189,7 @@ public class PlayerController
             if ( players != null )
             {
                 playerId = playerRepo.delete(playerId);
+                deletePlayerRolls ( playerId );
                 String jsonString = generateMessageJson ( "SUCCESS", "Player was removed from the db." );
                 JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
                 sendData.put("playerId", playerId);
@@ -330,8 +331,8 @@ public class PlayerController
     }
 
     //GET / players / {id} / games: devuelve el listado de jugadas por un jugador.
-    @GetMapping (value = "/players/{playerId}/games")
     @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping (value = "/players/{playerId}/games")
     public String getPlayerRolls (@PathVariable String playerId )
     {
         this.clearData ();

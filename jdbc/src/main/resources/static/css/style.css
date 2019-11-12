@@ -28,21 +28,18 @@ html,body
      font-size: 10px;
      background-color: #13232f !important;
      font-size: 10px;
-     width: calc(100vw - ((100vw - 100%)/2));
-     height: calc(100vh - ((100vh - 100%)/2));
-     padding: 2rem;
+     width: calc(100vw - ((100vw - 100%)/2) );
+     height: calc(100vh - ((100vh - 100%)/2) );
+}
 
-}
-body
-{
-     border-radius: 5px;
-     background-color: #26465f !important;
-     width: calc(100vw - ((100vw - 100%)/2) - 3.45rem);
-     height: calc(100vh - ((100vh - 100%)/2) - 4rem);
-     padding: 0.5rem;
-}
 ul, #ul, .ul
 {
   margin-bottom: 0px;
   list-style-type: none !important;
+}
+clearfix::after
+{
+  display: block;
+  content: "";
+  clear: both;
 }

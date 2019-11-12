@@ -1,0 +1,30 @@
+/* All Plays */
+.dice-roll__allPlays
+{
+     /* grid */
+     grid-column-start: 1;
+     grid-column-end:3;
+     grid-row-start: 2;
+     grid-row-end: 3;
+     text-align: center;
+
+}
+
+.dice-roll__allPlays span
+{
+     font-size: 1.5rem;
+     line-height: 3rem;
+     vertical-align: middle;
+}
+.dice-roll__allPlays--list
+{
+     width: 90%;
+     background-color: #4d8cbf;
+     height: 80%;
+     display: inline-block;
+     border-radius: 5px;
+
+     -moz-box-shadow:    inset 0 0 1px #13232f;
+     -webkit-box-shadow: inset 0 0 1px #13232f;
+     box-shadow:         inset 0 0 1px #13232f;
+}

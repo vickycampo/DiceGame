@@ -37,10 +37,10 @@ function createUserReturn ( JsonReturn )
      var type = JsonReturn["Message"]["Type"];
      var message = JsonReturn["Message"]["Message"];
      userId = JsonReturn["playerId"];
-
+     console.log (JsonReturn );
      if ( type == "ERROR")
      {
-          document.getElementById('userErrorMessage').textContent = "Name already in use.";
+          document.getElementById('userErrorMessage').textContent = message;
           document.getElementById('userErrorMessage').classList.remove ("show-success");
           document.getElementById('userErrorMessage').classList.add ("show-error");
      }
@@ -182,12 +182,13 @@ function showHideForm()
 };
 function swapRegisterItem()
 {
-     if (userId != "")
+     console.log ("userId - " + userId );
+     if ((userId != "")&&(userId !== undefined))
      {
           document.getElementById('manage-player--menu__newPlayer').textContent = "Modify Player";
           document.getElementById("manage-player--menu__deletePlayer").style.display="inline-block";
      }
-     else if (userId == "")
+     else if ((userId == "")||(userId == undefined))
      {
           document.getElementById('manage-player--menu__newPlayer').textContent = "Register";
           document.getElementById("manage-player--menu__deletePlayer").style.display="none";

@@ -1,11 +1,14 @@
 .dice-roll
 {
-     position:absolute;
+     width: 100%;
+     height: 100%;
+     text-align: center;
+
      background-color: #26465f;
      display:none;
      opacity: 0;
      border-radius: 5px;
-     padding: 2rem;
+     padding: 1rem;
 }
 .dice-roll.hide
 {
@@ -19,8 +22,8 @@
      display: grid;
      grid-template-columns: 25% 25% 25% auto;
      grid-template-rows: 60% 35% auto;
-     grid-column-gap: 1.5rem;
-     grid-row-gap: 1.5rem;
+     grid-column-gap: 1rem;
+     grid-row-gap: 1rem;
 }
 .grid-getItem
 {
@@ -39,12 +42,13 @@
 {
      /* Visual Styling */
      background-color:#CB6120;
+     margin-top: 0px;
 
      /* Grid Layout */
      grid-column-start: 1;
      grid-column-end: 2;
      grid-row-start: 1;
-     grid-row-end: 3;
+     grid-row-end: 2;
 }
 /* Rolling Section */
 .dice-roll__rollDices
@@ -56,43 +60,34 @@
      grid-row-start: 1;
      grid-row-end: 2;
 
-     /* new Grid */
-     display: grid;
-     grid-column-gap: .5rem;
-     grid-row-gap: .5rem;
-     grid-template-columns: 100%;
-     grid-template-rows: auto auto;
 
 }
 /* Dices */
 .dice-roll__rollDices--diceContainer
 {
+     height: 100%;
      display: flex;
      flex-direction: row;
      flex-wrap: wrap;
      justify-content: center;  /* Horizontal */
      align-items: flex-start; /* Vertical */
      align-content: space-evenly; /*Horizontal the content*/
-     margin:1rem;
-
+     margin:.5rem;
 }
 .dice-roll__rollDices--dices
 {
-     background-color: #13232f;
-     min-width: 70px;
-     min-height: 70px;
-
-     max-width: 150px;
-     max-height: 150px;
+     /* Sizing */
+     max-width: 20%;
+     width: 12vw;
+     margin-left: .5vw;
+     margin-right: .5vw;
 
      border-radius: 50%;
      border-style: solid;
-     border-width: 1rem;
+     border-width: 1vw;
      border-color:#26465f;
 
-     width: 10vw;
-     height: 10vw;
-     margin:1rem;
+     background-color: #13232f;
 
      display: flex;
      flex-direction: row;
@@ -102,27 +97,21 @@
      align-content: center; /*Horizontal the content*/
 
 }
+.dice-roll__rollDices--dices:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
 .dice-roll__rollDices--dices img
 {
-
+     width: 75%;
+     height: 75%;
 }
 
 /* Button Section */
 .dice-roll__rollDices--btnDiv
 {
-     /* Display in the parent gris */
-     grid-column-start: 1;
-     grid-column-end: 2;
-     grid-row-start: 2;
-     grid-row-end: 3;
-     vertical-align: middle;
-
-     /* Display of the content */
-     text-align: center;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     cursor: pointer;
+     width: 100%;
 }
 .dice-roll__rollDices--btn
 {
@@ -130,13 +119,15 @@
      display: inline-block;
      border-radius: 25px;
      background-color: #CB6120;
-     line-height: 4.5rem;
+     padding-top: .75rem;
+     padding-bottom: .75rem;
      width: 20rem;
+
      vertical-align: middle;
      border: none;
 
      /* Text */
-     font-size: 2rem;
+     font-size: 1.5rem;
      color: #26465f;
      font-weight: bolder;
 
@@ -162,31 +153,4 @@
      box-shadow: 0 0px 0px #26465f;
      /* position */
      transform: translateY(0px);
-}
-/* All Plays */
-.dice-roll__allPlays
-{
-     /* grid */
-     grid-column-start: 2;
-     grid-column-end:3;
-     grid-row-start: 2;
-     grid-row-end: 3;
-}
-/* stats */
-.dice-roll__stats
-{
-     /* grid */
-     grid-column-start: 3;
-     grid-column-end:4;
-     grid-row-start: 2;
-     grid-row-end: 3;
-}
-/* deleteRolls */
-.dice-roll__deleteRolls
-{
-     /* grid */
-     grid-column-start: 4;
-     grid-column-end:5;
-     grid-row-start: 2;
-     grid-row-end: 3;
 }

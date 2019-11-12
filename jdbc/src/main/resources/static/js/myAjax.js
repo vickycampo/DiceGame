@@ -63,6 +63,23 @@ function configureRequesObj ( method , url , body , triggerFunction)
                jsonObj = JSON.parse( this.response );
                eval ( triggerFunction );
           }
+          else if (this.status == 500)
+          {
+               if ( this.response != '')
+               {
+                    var error = JSON.parse( this.response )['error'] + " - " + JSON.parse( this.response )['message'];
+                    jsonObj = {
+                              "Message":
+                                   {
+                                        "Type":"ERROR",
+                                        "Message":error
+                                   }
+                              };
+                    eval ( triggerFunction );
+               }
+
+          }
+
      };
      ajaxRequest.open( method , url );
      ajaxRequest.setRequestHeader("Content-Type", "application/json");

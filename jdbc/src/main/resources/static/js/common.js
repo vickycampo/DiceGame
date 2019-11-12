@@ -2,16 +2,15 @@ function fixSizeLocation ( targetDiv )
 {
      if ( targetDiv != null)
      {
-          //we base our sizing and body
-          var referenceWidth = document.getElementsByTagName('hgroup')[0].clientWidth;
-          var referenceHeight = document.getElementsByTagName('hgroup')[0].clientHeight;
+          //hide all
+          document.getElementsByTagName('hgroup')[0].classList.add("hide");
+          document.getElementById('dice-roll').classList.add("hide");
 
-          var marginSize = 0;
-          targetDiv.style.width = ( referenceWidth ) + "px";
-          targetDiv.style.height = ( referenceHeight - 5) + "px"
+          //show the targetDiv
+          targetDiv.classList.remove("hide");
+          targetDiv.classList.add("show");
+          console.log (targetDiv.classList);
 
-          targetDiv.style.top = document.getElementsByTagName('hgroup')[0].offsetTop + 5 +"px";
-          targetDiv.style.margin = marginSize +"px";
      }
 
 }

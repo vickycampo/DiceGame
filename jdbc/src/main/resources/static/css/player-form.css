@@ -18,8 +18,8 @@
      /* Positon */
      float: right;
      position: absolute;
-     top: 3rem;
-     right: 2rem;
+     top: 4.5rem;
+     right: 4rem;
      z-index: 999;
 
 
@@ -64,6 +64,10 @@
 {
      background-color: #1e384c;
 }
+.playerButtonsLI
+{
+     text-align: left;
+}
 #createPlayer, #modifyPlayer
 {
      /* Size */
@@ -101,6 +105,15 @@
      border-color: #26465f;
      outline: none;
 }
+#createPlayer:active, #modifyPlayer:active
+{
+     /* position */
+     transform: translateY(2px);
+     /* Shadow Styles */
+     -webkit-box-shadow: 0 0px 0px #121212;
+     -moz-box-shadow: 0 0px 0px #121212;
+     box-shadow: 0 0px 0px #121212;
+}
 #userErrorMessage
 {
      margin: 0px;
@@ -109,10 +122,14 @@
 }
 #userErrorMessage.show-error
 {
-     color: #CB6120;
+     font-size: 1.25rem;
+     font-weight: bold;
+     color: #ad4200;
 }
 #userErrorMessage.show-success
 {
+     font-size: 1.25rem;
+     font-weight: bold;
      color: #56b6c2;
 }
 #userErrorMessage.hide
