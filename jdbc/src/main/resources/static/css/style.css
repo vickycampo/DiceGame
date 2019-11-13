@@ -30,8 +30,13 @@ html,body
      font-size: 10px;
      width: calc(100vw - ((100vw - 100%)/2) );
      height: calc(100vh - ((100vh - 100%)/2) );
+     overflow: hidden;
 }
-
+body::-webkit-scrollbar
+{
+    display: none;
+    overflow: hidden;
+}
 ul, #ul, .ul
 {
   margin-bottom: 0px;

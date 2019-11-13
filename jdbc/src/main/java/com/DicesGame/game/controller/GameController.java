@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @RestController
-public class GameController
+public class    GameController
 {
     private List<Player> players;
     private Player singlePlayers;
@@ -50,7 +50,9 @@ public class GameController
         Iterator playerIterator = players.iterator();
 
         StringBuilder jsonString = new StringBuilder(this.toString());
+        jsonString.append(", " + generateMessageJson ( "SUCCESS", "Sending Data." ));
         jsonString.append(", \"WinsPercentage\":[");
+        System.out.println( jsonString.toString() );
         double winsAverage = 0.00;
 
         String playerId = "";
@@ -137,10 +139,10 @@ public class GameController
         try
         {
             List<String> playerIds = playerRepo.findAllIds();
-            String biggestLoser = rollRepo.findBiggestLoser( playerIds );
-            System.out.println( biggestLoser );
-            JSONObject sendData = new JSONObject( biggestLoser );
+            String biggestLoser = rollRepo.findBiggestLoser( playerIds ) + generateMessageJson ( "SUCCESS", "Sending Data." );
+            JSONObject sendData = new JSONObject(  "{" + biggestLoser + "}"  );
             return sendData.toString();
+
         }
         catch ( Exception e )
         {
@@ -158,17 +160,19 @@ public class GameController
     {
 
         this.clearData ();
+        String biggestWinner = "";
         try
         {
             List<String> playerIds = playerRepo.findAllIds();
-            String biggestWinner = rollRepo.findBiggestWinner( playerIds );
-            System.out.println( biggestWinner );
-            JSONObject sendData = new JSONObject( biggestWinner );
+            biggestWinner = rollRepo.findBiggestWinner( playerIds ) + generateMessageJson ( "SUCCESS", "Sending Data." );
+
+            JSONObject sendData = new JSONObject(  "{" + biggestWinner + "}"  );
             return sendData.toString();
         }
         catch ( Exception e )
         {
-            String jsonString = generateMessageJson ( "ERROR", "Error 132 - " +  e.getMessage());
+            System.out.println( biggestWinner );
+            String jsonString = generateMessageJson ( "ERROR", "Error 174 - " +  e.getMessage());
             JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
             return sendData.toString();
         }

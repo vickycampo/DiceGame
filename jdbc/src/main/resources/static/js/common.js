@@ -9,8 +9,6 @@ function fixSizeLocation ( targetDiv )
           //show the targetDiv
           targetDiv.classList.remove("hide");
           targetDiv.classList.add("show");
-          console.log (targetDiv.classList);
-
      }
 
 }

@@ -12,7 +12,14 @@ function doYouWantToRolldice()
      fixSizeLocation ( activeSection );
      document.getElementById('diceRollingBTN').addEventListener( 'click', letsRollTheDice );
      dicesIMG = document.getElementsByClassName('dice-roll__rollDices--dices--img');
-     console.log ( dicesIMG );
+
+     document.getElementById("refreshHistory").addEventListener( 'click' , refreshPlayerGames );
+     document.getElementById("deleteHistory").addEventListener( 'click' , deletePlayerGames );
+     document.getElementById("refreshStats").addEventListener( 'click' , refreshPlayerStats );
+     document.getElementById("refreshStats").addEventListener( 'click' , refreshPlayerStats );
+     document.getElementById("biggestWinnerRefreshIcon").addEventListener( 'click' , biggestWinnerRefresh );
+     document.getElementById("biggestLoserRefreshIcon").addEventListener( 'click' , biggestLoserRefresh );
+
 }
 function stopRolling ()
 {
@@ -58,7 +65,6 @@ function startRollingDice()
      }
      else
      {
-               console.log (returnJson);
                var type = returnJson["Message"]["Type"];
                var message = returnJson["Message"]["Message"];
                if ( type == "SUCCESS")
@@ -74,16 +80,35 @@ function startRollingDice()
                     {
                          document.getElementById('diceRollingBTN').textContent = "Yay! you win! keep it up!";
                     }
-                    var Dices = returnJson["Dices"];
+                    //place the dices
+                    var DicesJson = returnJson["Dices"];
+
                     for ( var i in dicesIMG )
                     {
                          if (typeof dicesIMG[i].src !== 'undefined')
                          {
                               // Put the results in the dices
                               root = dicesIMG[i].src.substring(0, dicesIMG[i].src.length-5);
-                              dicesIMG[i].src = root + Dices[i]['roll'] + ".svg";
+                              dicesIMG[i].src = root + DicesJson[i]['roll'] + ".svg";
+
+                              rollid = DicesJson[i]["rollid"];
+                              diceNumber =  DicesJson[i]["dicenumber"];
+                              roll =  DicesJson[i]["roll"];
+                              if (typeof Dices === 'undefined')
+                              {
+                                   var Dices = new Array;
+                              }
+                              if (typeof Dices[rollid] === 'undefined')
+                              {
+                                   Dices[rollid] = new Array;
+                              }
+                              Dices[rollid][diceNumber] = roll;
                          }
                     }
+                    //add the roll to the table
+                    var Rolls = new Array;
+                    Rolls[0] = Roll;
+                    addToGameTable ( Rolls , Dices );
                }
                else if ( type == "ERROR")
                {

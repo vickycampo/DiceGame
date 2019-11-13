@@ -265,7 +265,7 @@ public class PlayerController
             StringBuilder jsonString = new StringBuilder( generateMessageJson ( "SUCCESS", "Successful roll ." ) );
 
             //get player, rolls and dices info
-            this.singlePlayers = playerRepo.findByPlayerid( playerId );
+            //this.singlePlayers = playerRepo.findByPlayerid( playerId );
             this.singleRoll = rollRepo.findByRollid ( rollId );
             this.dices = diceRepo.findByRollsId( rollId );
 
@@ -274,8 +274,6 @@ public class PlayerController
 
             JSONObject sendData = new JSONObject( "{" + jsonString.toString() + "}" );
             return sendData.toString();
-
-
         }
         catch ( Exception e )
         {
@@ -288,7 +286,7 @@ public class PlayerController
 
     //DELETE / players / {id} / games: elimina las tiradas del jugador.
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @DeleteMapping (value = "/players/{playerId}/games")
+        @DeleteMapping (value = "/players/{playerId}/games")
     public String deletePlayerRolls ( @PathVariable String playerId )
     {
         try

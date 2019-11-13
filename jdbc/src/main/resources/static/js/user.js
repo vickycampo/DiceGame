@@ -2,10 +2,10 @@
 
 function addEventsUser()
 {
-  var registerLINK = document.getElementById('manage-player--menu__newPlayer');
-  var exitLINK = document.getElementById('manage-player--menu__deletePlayer');
-  registerLINK.addEventListener( 'click' , showHideForm );
-  exitLINK.addEventListener( 'click', deleteUser );
+     var registerLINK = document.getElementById('manage-player--menu__newPlayer');
+     var exitLINK = document.getElementById('manage-player--menu__deletePlayer');
+     registerLINK.addEventListener( 'click' , showHideForm );
+     exitLINK.addEventListener( 'click', deleteUser );
 
 }
 
@@ -25,7 +25,6 @@ function createUser()
      else
      {
           document.getElementById('userErrorMessage').textContent = "Name is missing.";
-
           document.getElementById('userErrorMessage').classList.add ("show-error");
      }
 
@@ -52,7 +51,8 @@ function createUserReturn ( JsonReturn )
 
           sessionStorage.setItem("userName", userName);
           sessionStorage.setItem("userId", userId);
-
+          getPlayerRolls();
+          refreshPlayerStats();
           var delayInMilliseconds = 500;
           setTimeout(function()
           {
@@ -118,11 +118,10 @@ function deleteUser()
      var localURL = window.location.href;
      var method = "DELETE";
      var url = "/players/" + userId;
-     var body = JSON.stringify({"name": userName});
+     var body = "";
 
      createRequestObj();
      configureRequesObj( method , url , body , "deleteUserReturn ( jsonObj )");
-
 
 }
 function deleteUserReturn( JsonReturn )
@@ -140,44 +139,45 @@ function deleteUserReturn( JsonReturn )
           userName = "";
           swapRegisterItem();
           stopRolling ();
+          removeGamesFromTable();
      }
 }
 function showHideButons()
 {
-  var modifyPlayerBTN = document.getElementById( 'modifyPlayer' );
-  var createPlayerBTN = document.getElementById( 'createPlayer' );
-  /* Show hide buttons */
-  if (userId == "")
-  {
-    modifyPlayerBTN.style.display = "none";
-    createPlayerBTN.style.display = "inline-block";
-    createPlayerBTN.addEventListener( 'click', createUser );
-  }
-  else
-  {
-    modifyPlayerBTN.style.display = "inline-block";
-    createPlayerBTN.style.display = "none";
-    modifyPlayerBTN.addEventListener( 'click', modifyUser );
-  }
+     var modifyPlayerBTN = document.getElementById( 'modifyPlayer' );
+     var createPlayerBTN = document.getElementById( 'createPlayer' );
+     /* Show hide buttons */
+     if (userId == "")
+     {
+          modifyPlayerBTN.style.display = "none";
+          createPlayerBTN.style.display = "inline-block";
+          createPlayerBTN.addEventListener( 'click', createUser );
+     }
+     else
+     {
+          modifyPlayerBTN.style.display = "inline-block";
+          createPlayerBTN.style.display = "none";
+          modifyPlayerBTN.addEventListener( 'click', modifyUser );
+     }
 };
 function showHideForm()
 {
-  showHideButons();
-  swapRegisterItem();
-  var formContainer = document.getElementById('manage-player__form--container');
-  /* Show / hide form */
-  if (formContainer.classList.contains( "show" ))
-  {
-    formContainer.classList.remove ("show");
-    formContainer.classList.add ("hide");
-  }
-  else if (formContainer.classList.contains( "hide" ))
-  {
-    formContainer.classList.remove ("hide");
-    formContainer.classList.add ("show");
-    document.getElementById('playerName').value = userName;
-  }
-  document.getElementById('userErrorMessage').textContent = " "
+     showHideButons();
+     swapRegisterItem();
+     var formContainer = document.getElementById('manage-player__form--container');
+     /* Show / hide form */
+     if (formContainer.classList.contains( "show" ))
+     {
+          formContainer.classList.remove ("show");
+          formContainer.classList.add ("hide");
+     }
+     else if (formContainer.classList.contains( "hide" ))
+     {
+          formContainer.classList.remove ("hide");
+          formContainer.classList.add ("show");
+          document.getElementById('playerName').value = userName;
+     }
+     document.getElementById('userErrorMessage').textContent = " "
 
 };
 function swapRegisterItem()

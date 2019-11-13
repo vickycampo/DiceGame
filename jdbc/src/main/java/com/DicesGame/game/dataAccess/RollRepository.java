@@ -68,7 +68,6 @@ public class RollRepository
                     "SELECT * FROM rolls WHERE id = ?", new Object[] { rollId },
                     (resultSet, rowNum) -> new Roll(resultSet.getInt("id"), resultSet.getString("playersid"), resultSet.getString("result"))
             ).forEach(roll -> rolls.add(roll));
-            System.out.println("Size  - " + rolls.size());
             if ( rolls.size() > 0)
             {
                 Iterator iter = rolls.iterator();
@@ -133,7 +132,6 @@ public class RollRepository
 
             results.put("AVG_WINS" , averageWins);
             results.put("AVG_LOSTS" , averageLosts);
-            System.out.println( "Before Send - " + results);
             return results;
         }
         else {
@@ -196,7 +194,7 @@ public class RollRepository
 
         }
         StringBuilder jsonString = new StringBuilder();
-        jsonString.append( "{");
+        jsonString.append( "BiggestLoser:{");
         jsonString.append( "\"PlayerId\":\"" + biggestLoserId + "\", ");
         jsonString.append( "\"AVG_LOSTS\":\"" + oldAVG + "\" ");
         jsonString.append( "}, ");
@@ -213,22 +211,19 @@ public class RollRepository
         {
             String playerId = iterator.next().toString();
             results = this.findAverageWins ( playerId );
-            System.out.println( "After Send - " + results);
             if ( results.size() != 0 )
             {
                 //look for the lowest AVG_WINS
-                System.out.println( "oldAVG - " + oldAVG + " - AVG_WINS - " +  results.get("AVG_WINS"));
                 if ( ( biggestWinnerId == "" ) || ( results.get("AVG_WINS") > oldAVG) )
                 {
                     oldAVG = results.get("AVG_WINS");
                     biggestWinnerId = playerId;
-                    System.out.println( "oldAVG - " + oldAVG );
                 }
             }
 
         }
         StringBuilder jsonString = new StringBuilder();
-        jsonString.append( "{");
+        jsonString.append( "BiggestWinner:{");
         jsonString.append( "\"PlayerId\":\"" + biggestWinnerId + "\", ");
         jsonString.append( "\"AVG_WINS\":\"" + oldAVG + "\" ");
         jsonString.append( "}, ");

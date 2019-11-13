@@ -19,4 +19,5 @@
      /* placing */
      margin: auto;
      margin-top: 2%;
+     overflow: hidden;
 }
