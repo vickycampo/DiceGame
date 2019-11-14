@@ -27,7 +27,6 @@ function doSessionStorage()
      if (( sessionStorage.getItem("userId") != null )&&( sessionStorage.getItem("userId") != "" ))
      {
           userId = sessionStorage.getItem("userId");
-          doYouWantToRolldice();
      }
      else
      {

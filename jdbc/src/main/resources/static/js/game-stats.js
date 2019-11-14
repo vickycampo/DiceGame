@@ -2,7 +2,6 @@ function getPlayerStats()
 {
      if (( userId != "" ) && ( userId != null))
      {
-          console.log ( "refreshPlayerStats" );
           var localURL = window.location.href;
           var method = "GET";
           var url = "/players";
@@ -14,11 +13,12 @@ function getPlayerStats()
 }
 function getPlayerStatsReturn ( JsonReturn )
 {
-     console.log ( "refreshPlayerStatsReturn" );
      if ( typeof JsonReturn["Message"] !== undefined)
      {
           if ( JsonReturn["Message"]["Type"] == "ERROR")
           {
+               console.log ("File: game-stats.js");
+               console.log ("Error 23 - " + JsonReturn["Message"]["Message"]);
                alert ( JsonReturn["Message"]["Message"] );
           }
           else if ( JsonReturn["Message"]["Type"] == "SUCCESS")
@@ -66,12 +66,15 @@ function getPlayerStatsReturn ( JsonReturn )
 
 
           }
-          addToStatsTable ( PlayersList );
+          if ((typeof PlayersList !== 'undefined'))
+          {
+               addToStatsTable ( PlayersList );
+          }
+
      }
 }
 function addToStatsTable ( PlayersList )
 {
-     console.log ("addToStatsTable");
      if ((typeof PlayersList !== 'undefined'))
      {
           // Find a <table> element with id="myTable":
@@ -81,8 +84,15 @@ function addToStatsTable ( PlayersList )
 
           for ( var i in PlayersList )
           {
+
+               console.log (i);
+
                tableLength = table.rows.length;
                row = table.insertRow(tableLength);
+               if (i == userId)
+               {
+                    row.classList.add("mePlayer");
+               }
 
                j = 0;
                cell[j] = row.insertCell(j);
@@ -114,7 +124,6 @@ function addToStatsTable ( PlayersList )
 }
 function removeStatsFromTable()
 {
-     console.log ("removeStatsFromTable");
      var table = document.getElementById("gameStatsTable");
      while (table.rows.length > 1)
      {
@@ -123,7 +132,6 @@ function removeStatsFromTable()
 }
 function refreshPlayerStats()
 {
-     console.log ("refreshPlayerStats")
      removeStatsFromTable();
      getPlayerStats();
 

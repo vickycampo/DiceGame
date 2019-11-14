@@ -14,6 +14,16 @@
 //2. An XMLHttpRequest object is created.
 function createRequestObj()
 {
+     var i = 0;
+     if (typeof ajaxRequest !== 'undefined')
+     {
+          while (( ajaxRequest.readyState == 1) && (i<5000))
+          {
+
+               i ++ ;
+          }
+     }
+
      try
      {
           // Opera 8.0+, Firefox, Safari
@@ -81,7 +91,19 @@ function configureRequesObj ( method , url , body , triggerFunction)
           }
 
      };
-     ajaxRequest.open( method , url );
-     ajaxRequest.setRequestHeader("Content-Type", "application/json");
-     ajaxRequest.send( body );
+     try
+     {
+          ajaxRequest.open( method , url );
+          ajaxRequest.setRequestHeader("Content-Type", "application/json");
+          ajaxRequest.send( body );
+     }
+     catch (e)
+     {
+          console.log ("File: myAjax.js");
+          console.log ("Error 95 - ");
+          console.log (e);
+     } finally {
+
+     }
+
 }

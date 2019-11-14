@@ -2,7 +2,6 @@ function getPlayerRolls()
 {
      if (( userId != "" ) && ( userId != null))
      {
-          console.log ("getting games");
           //we check if we need to get the rolls
           //"/players/{playerId}/games
           var localURL = window.location.href;
@@ -13,11 +12,10 @@ function getPlayerRolls()
           createRequestObj();
           configureRequesObj( method , url , body , "getPlayerRolls_return ( jsonObj )");
      }
-     
+
 }
 function getPlayerRolls_return ( JsonReturn )
 {
-     console.log ("got a return");
      var Dices = new Array;
      var Rolls;
      if (typeof JsonReturn["Message"] !== 'undefined')
@@ -27,6 +25,8 @@ function getPlayerRolls_return ( JsonReturn )
 
           if ( type == "ERROR")
           {
+               console.log ("File: player-games.js");
+               console.log ("Error 31 - " + message);
                alert (message);
           }
           else if ( type == "SUCCESS")
@@ -102,7 +102,7 @@ function addToGameTable ( Rolls , Dices )
 
 
 }
-function removeGamesFromTable()
+     function removeGamesFromTable()
 {
      var table = document.getElementById("playerGameTable");
      while (table.rows.length > 1)
@@ -113,13 +113,12 @@ function removeGamesFromTable()
 }
 function refreshPlayerGames ()
 {
-     console.log ( "refreshPlayerGames" );
      removeGamesFromTable();
      getPlayerRolls();
 }
 function deletePlayerGames()
 {
-     console.log ( "deletePlayerGames" );
+     console.log ("deletePlayerGames")
      var localURL = window.location.href;
      var method = "DELETE";
      var url = "/players/" + userId + "/games";
@@ -131,15 +130,17 @@ function deletePlayerGames()
 }
 function deletePlayerGamesReturn( JsonReturn )
 {
-     console.log ( "deletePlayerGamesReturn" );
-     console.log ( JsonReturn );
-     if ( typeof JsonReturn["Type"] !== undefined)
+     
+
+     if ( typeof JsonReturn["Message"] !== undefined)
      {
-          if ( JsonReturn["Type"] == "ERROR")
+          if ( JsonReturn["Message"]["Type"] == "ERROR")
           {
-               alert ( JsonReturn["Type"] );
+               console.log ("File: player-games.js");
+               console.log ("Error 143 - " + JsonReturn["Message"]);
+               alert ( JsonReturn["Message"] );
           }
-          else if ( JsonReturn["Type"] == "SUCCESS")
+          else if ( JsonReturn["Message"]["Type"] == "SUCCESS")
           {
                removeGamesFromTable();
                getPlayerRolls();

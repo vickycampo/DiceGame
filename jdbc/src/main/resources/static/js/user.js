@@ -18,6 +18,9 @@ function createUser()
           var method = "POST";
           var url = "/players";
           var body = JSON.stringify({"name": userName});
+          //remove eventListener
+          var createPlayerBTN = document.getElementById( 'createPlayer' );
+          createPlayerBTN.removeEventListener( 'click', createUser );;
 
           createRequestObj();
           configureRequesObj( method , url , body , "createUserReturn ( jsonObj )");
@@ -36,12 +39,14 @@ function createUserReturn ( JsonReturn )
      var type = JsonReturn["Message"]["Type"];
      var message = JsonReturn["Message"]["Message"];
      userId = JsonReturn["playerId"];
-     console.log (JsonReturn );
      if ( type == "ERROR")
      {
           document.getElementById('userErrorMessage').textContent = message;
           document.getElementById('userErrorMessage').classList.remove ("show-success");
           document.getElementById('userErrorMessage').classList.add ("show-error");
+
+          var createPlayerBTN = document.getElementById( 'createPlayer' );
+          createPlayerBTN.addEventListener( 'click', createUser );
      }
      else if ( type == "SUCCESS")
      {
@@ -51,8 +56,9 @@ function createUserReturn ( JsonReturn )
 
           sessionStorage.setItem("userName", userName);
           sessionStorage.setItem("userId", userId);
-          getPlayerRolls();
-          refreshPlayerStats();
+
+
+
           var delayInMilliseconds = 500;
           setTimeout(function()
           {
@@ -88,7 +94,6 @@ function modifyUser()
 }
 function modifyUserReturn( JsonReturn )
 {
-     console.log ("Modify User Return");
      var type = JsonReturn["Message"]["Type"];
      var message = JsonReturn["Message"]["Message"];
 
@@ -114,7 +119,6 @@ function modifyUserReturn( JsonReturn )
 }
 function deleteUser()
 {
-     console.log ("Delete User");
      var localURL = window.location.href;
      var method = "DELETE";
      var url = "/players/" + userId;
@@ -130,6 +134,8 @@ function deleteUserReturn( JsonReturn )
      var message = JsonReturn["Message"]["Message"];
      if ( type == "ERROR")
      {
+          console.log ("File: User.js");
+          console.log ("Error 139 - " + message );
           alert (message);
      }
      else if ( type == "SUCCESS")
@@ -164,6 +170,9 @@ function showHideForm()
 {
      showHideButons();
      swapRegisterItem();
+
+
+
      var formContainer = document.getElementById('manage-player__form--container');
      /* Show / hide form */
      if (formContainer.classList.contains( "show" ))
@@ -182,7 +191,6 @@ function showHideForm()
 };
 function swapRegisterItem()
 {
-     console.log ("userId - " + userId );
      if ((userId != "")&&(userId !== undefined))
      {
           document.getElementById('manage-player--menu__newPlayer').textContent = "Modify Player";

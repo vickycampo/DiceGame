@@ -35,10 +35,76 @@ public class    GameController
     @GetMapping ( value = "/players")
     public String getPlayersStatistics (  )
     {
+        List<Player> statsPlayersList;
         this.clearData ();
         try
         {
-            players = playerRepo.findAll();
+            statsPlayersList = playerRepo.findAll();
+            players = playerRepo.findAll();;
+            Iterator playerIterator = statsPlayersList.iterator();
+
+            StringBuilder jsonString = new StringBuilder();
+            jsonString.append(this.toString());
+            jsonString.append(", \"WinsPercentage\":[");
+            double winsAverage = 0.00;
+
+            String playerId = "";
+            while ( playerIterator.hasNext() )
+            {
+                playerId = ((Player)playerIterator.next()).getPlayerId();
+                try
+                {
+                    HashMap<String, Double> results = rollRepo.findAverageWins( playerId );
+
+                    if  ( results.size() != 0 )
+                    {
+                        jsonString.append( "{");
+                        jsonString.append( "\"PlayerId\":\"" + playerId + "\", ");
+                        jsonString.append( "\"Wins\":\"" + results.get("WIN") + "\", ");
+                        jsonString.append( "\"Loses\":\"" + results.get("LOST") + "\", ");
+                        jsonString.append( "\"WinsPercentage\":\"" + results.get("AVG_WINS") + "\", ");
+                        jsonString.append( "\"LostPercentage\":\"" + results.get("AVG_LOSTS") + "\" ");
+                        jsonString.append( "}, ");
+                    }
+                    else
+                    {
+                        jsonString.append( "{");
+                        jsonString.append( "\"PlayerId\":\"" + playerId + "\", ");
+                        jsonString.append( "\"Wins\":\"0\", ");
+                        jsonString.append( "\"Loses\":\"0\", ");
+                        jsonString.append( "\"WinsPercentage\":\"0\", ");
+                        jsonString.append( "\"LostPercentage\":\"0\" ");
+                        jsonString.append( "}, ");
+                    }
+                }
+                catch ( NullPointerException e )
+                {
+                    //Nothing, there can be a player that has no plays
+                }
+
+            }
+            try
+            {
+                jsonString.delete(jsonString.length()-2 , jsonString.length());
+                jsonString.append("]");
+                jsonString.append(", " + generateMessageJson ( "SUCCESS", "Sending Data." ));
+
+
+
+                JSONObject sendData = new JSONObject( "{" + jsonString.toString() + "}" );
+                return sendData.toString();
+            }
+            catch ( Exception e )
+            {
+                System.out.println("----------------------------------");
+                System.out.println( jsonString.substring(150, 170) );
+                System.out.println("----------------------------------");
+                System.out.println( jsonString);
+
+                String ErrorString = generateMessageJson ( "ERROR", "Error 101 - " +  e.getMessage());
+                JSONObject sendData = new JSONObject( "{" + ErrorString + "}" );
+                return sendData.toString();
+            }
         }
         catch ( Exception e )
         {
@@ -47,65 +113,7 @@ public class    GameController
             return sendData.toString();
         }
 
-        Iterator playerIterator = players.iterator();
 
-        StringBuilder jsonString = new StringBuilder(this.toString());
-        jsonString.append(", " + generateMessageJson ( "SUCCESS", "Sending Data." ));
-        jsonString.append(", \"WinsPercentage\":[");
-        System.out.println( jsonString.toString() );
-        double winsAverage = 0.00;
-
-        String playerId = "";
-        while ( playerIterator.hasNext() )
-        {
-            playerId = ((Player)playerIterator.next()).getPlayerId();
-            try
-            {
-                HashMap<String, Double> results = rollRepo.findAverageWins( playerId );
-                if  ( results.size() != 0 )
-                {
-                    jsonString.append( "{");
-                    jsonString.append( "\"PlayerId\":\"" + playerId + "\", ");
-                    jsonString.append( "\"Wins\":\"" + results.get("WIN") + "\", ");
-                    jsonString.append( "\"Loses\":\"" + results.get("LOST") + "\", ");
-                    jsonString.append( "\"WinsPercentage\":\"" + results.get("AVG_WINS") + "\", ");
-                    jsonString.append( "\"LostPercentage\":\"" + results.get("AVG_LOSTS") + "\" ");
-                    jsonString.append( "}, ");
-                }
-                else
-                {
-                    jsonString.append( "{");
-                    jsonString.append( "\"PlayerId\":\"" + playerId + "\", ");
-                    jsonString.append( "\"Wins\":\"0\", ");
-                    jsonString.append( "\"Loses\":\"0\", ");
-                    jsonString.append( "\"WinsPercentage\":\"0\", ");
-                    jsonString.append( "\"LostPercentage\":\"0\" ");
-                    jsonString.append( "}, ");
-                }
-                jsonString.append("");
-
-
-            }
-            catch ( NullPointerException e )
-            {
-                //Nothing, there can be a player that has no plays
-                System.out.println("Nothing, there can be a player that has no plays");
-            }
-
-        }
-        try
-        {
-            jsonString.delete(jsonString.length()-2 , jsonString.length());
-            jsonString.append("]");
-            JSONObject sendData = new JSONObject( "{" + jsonString.toString() + "}" );
-            return sendData.toString();
-        }
-        catch ( Exception e )
-        {
-            String ErrorString = generateMessageJson ( "ERROR", "Error 101 - " +  e.getMessage());
-            JSONObject sendData = new JSONObject( "{" + ErrorString + "}" );
-            return sendData.toString();
-        }
 
 
     }
@@ -139,7 +147,7 @@ public class    GameController
         try
         {
             List<String> playerIds = playerRepo.findAllIds();
-            String biggestLoser = rollRepo.findBiggestLoser( playerIds ) + generateMessageJson ( "SUCCESS", "Sending Data." );
+            String biggestLoser = rollRepo.findBiggest( playerIds , "loser" ) + generateMessageJson ( "SUCCESS", "Sending Data." );
             JSONObject sendData = new JSONObject(  "{" + biggestLoser + "}"  );
             return sendData.toString();
 
@@ -164,14 +172,13 @@ public class    GameController
         try
         {
             List<String> playerIds = playerRepo.findAllIds();
-            biggestWinner = rollRepo.findBiggestWinner( playerIds ) + generateMessageJson ( "SUCCESS", "Sending Data." );
+            biggestWinner = rollRepo.findBiggest( playerIds , "winner" ) + generateMessageJson ( "SUCCESS", "Sending Data." );
 
             JSONObject sendData = new JSONObject(  "{" + biggestWinner + "}"  );
             return sendData.toString();
         }
         catch ( Exception e )
         {
-            System.out.println( biggestWinner );
             String jsonString = generateMessageJson ( "ERROR", "Error 174 - " +  e.getMessage());
             JSONObject sendData = new JSONObject( "{" + jsonString + "}" );
             return sendData.toString();

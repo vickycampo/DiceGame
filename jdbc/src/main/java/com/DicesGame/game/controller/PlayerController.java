@@ -225,33 +225,18 @@ public class PlayerController
         //throw the dices
         int[] results = new int[numberOfDices];
         int range = (max - min) + 1;
-
+        String result = "";
         boolean wonGame = true;
         for (int i = 0; i < numberOfDices; i++)
         {
             do
             {
                 results[i] = (int) (Math.random() * range) + min;
-                if ((results[i] != 5)&&(results[i] != 6))
-                {
-                    wonGame = false;
-                }
+
             } while ( (results[i] < min ) || (results[i] > max ) );
 
         }
-        //check the result - win - the sum is 7 / lose anything else.
-        String result;
-        if ( wonGame )
-        {
-            result = "WIN";
-        }
-        else
-        {
-            result = "LOST";
-        }
-
-
-
+        result = this.testResults ( results );
         try
         {
             //save in the rolls table (using the player id / get the roll id for dices)
@@ -283,6 +268,26 @@ public class PlayerController
         }
 
     }
+
+    /**
+     * Test the result of the dices for a win or lost
+     * @param resultsArray
+     * @return
+     */
+    private String testResults (int [] resultsArray )
+    {
+        int[] count = { 0, 0, 0, 0, 0,0 };
+        //check the result - win - the sum is 7 / lose anything else.
+        for (int i = 0; i < resultsArray.length ; i++)
+        {
+            int index = resultsArray[i]-1;
+            count[ index ] ++;
+            if ( count [ index ]>2)
+                return "WIN";
+        }
+        return "LOST";
+    }
+
 
     //DELETE / players / {id} / games: elimina las tiradas del jugador.
     @CrossOrigin(origins = "*", allowedHeaders = "*")

@@ -172,59 +172,52 @@ public class RollRepository
             return "{}";
         }
     }
-    public String findBiggestLoser ( List<String> playersIds )
+
+    public String findBiggest ( List<String> playersIds, String type )
     {
         Iterator iterator = playersIds.iterator();
         HashMap<String, Double> results  = new HashMap<>();
         double oldAVG = -1;
-        String biggestLoserId = "";
+        String biggestId = "";
         while ( iterator.hasNext() )
         {
             String playerId = iterator.next().toString();
+
             results = this.findAverageWins ( playerId );
-            if ( results.size() != 0 )
+            if (type =="winner")
             {
-                //look for the lowest AVG_LOSTS
-                if ( ( biggestLoserId == "" ) || ( results.get("AVG_LOSTS") > oldAVG) )
+                if ( results.size() != 0 )
                 {
-                    oldAVG = results.get("AVG_LOSTS");
-                    biggestLoserId = playerId;
+                    //look for the lowest AVG_WINS
+                    if ( ( biggestId == "" ) || ( results.get("AVG_WINS") > oldAVG) )
+                    {
+                        oldAVG = results.get("AVG_WINS");
+                        biggestId = playerId;
+                    }
+                }
+            }
+            else if (type =="loser")
+            {
+                if ( results.size() != 0 )
+                {
+                    //look for the lowest AVG_LOSTS
+                    if ( ( biggestId == "" ) || ( results.get("AVG_WINS") < oldAVG) )
+                    {
+                        oldAVG = results.get("AVG_WINS");
+                        biggestId = playerId;
+                    }
                 }
             }
 
-        }
-        StringBuilder jsonString = new StringBuilder();
-        jsonString.append( "BiggestLoser:{");
-        jsonString.append( "\"PlayerId\":\"" + biggestLoserId + "\", ");
-        jsonString.append( "\"AVG_LOSTS\":\"" + oldAVG + "\" ");
-        jsonString.append( "}, ");
-        return jsonString.toString();
-
-    }
-    public String findBiggestWinner ( List<String> playersIds )
-    {
-        Iterator iterator = playersIds.iterator();
-        HashMap<String, Double> results  = new HashMap<>();
-        double oldAVG = -1;
-        String biggestWinnerId = "";
-        while ( iterator.hasNext() )
-        {
-            String playerId = iterator.next().toString();
-            results = this.findAverageWins ( playerId );
-            if ( results.size() != 0 )
-            {
-                //look for the lowest AVG_WINS
-                if ( ( biggestWinnerId == "" ) || ( results.get("AVG_WINS") > oldAVG) )
-                {
-                    oldAVG = results.get("AVG_WINS");
-                    biggestWinnerId = playerId;
-                }
-            }
 
         }
+        PlayerRepository playerRepo = new PlayerRepository();
+        Player winner = playerRepo.findByPlayerid( biggestId );
         StringBuilder jsonString = new StringBuilder();
-        jsonString.append( "BiggestWinner:{");
-        jsonString.append( "\"PlayerId\":\"" + biggestWinnerId + "\", ");
+        jsonString.append( "Biggest:{");
+        jsonString.append( "\"PlayerId\":\"" + biggestId + "\", ");
+        jsonString.append( "\"type\":\"" + type + "\", ");
+        jsonString.append( "\"Name\":\"" + winner.getName() + "\", ");
         jsonString.append( "\"AVG_WINS\":\"" + oldAVG + "\" ");
         jsonString.append( "}, ");
         return jsonString.toString();

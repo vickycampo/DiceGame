@@ -1,102 +1,171 @@
-.dice-roll
-{
-     width: 100%;
-     height: 100%;
-     text-align: center;
+/* General Layout */
+     .dice-roll
+     {
+          width: 100%;
+          height: 100%;
+          text-align: center;
 
-     background-color: #26465f;
-     display:none;
-     opacity: 0;
-     border-radius: 5px;
-     padding: 1rem;
-}
-.dice-roll.hide
-{
-     display:none !important;
-     opacity: 0 !important;
+          background-color: #26465f;
+          display:none;
+          opacity: 0;
+          border-radius: 5px;
+          padding: 1rem;
+     }
+     .dice-roll.hide
+     {
+          display:none !important;
+          opacity: 0 !important;
 
-}
-.dice-roll.show
-{
-     opacity: 1 !important;
-     display: grid;
-     grid-template-columns: 25% 25% 25% auto;
-     grid-template-rows: 25% 20% 20% 25% auto;
-     grid-column-gap: 1rem;
-     grid-row-gap: 1rem;
-}
-.grid-getItem
-{
-     /* Box Display */
-     border-radius: 5px;
-     background-color: #3a698f;
-     padding: 0rem;
+     }
+     .dice-roll.show
+     {
+          opacity: 1 !important;
+          display: grid;
+          grid-template-columns: 25% 25% 25% auto;
+          grid-template-rows: 25% 20% 20% 25% auto;
+          grid-column-gap: 1rem;
+          grid-row-gap: 1rem;
+     }
+/* Grid items */
+     .grid-getItem
+     {
+          /* Box Display */
+          border-radius: 5px;
+          background-color: #3a698f;
+          padding: 0rem;
 
-     /* Inner Shadow */
-     -moz-box-shadow:    inset 0 0 1px #13232f;
-     -webkit-box-shadow: inset 0 0 1px #13232f;
-     box-shadow:         inset 0 0 1px #13232f;
-}
-/* Header */
-.dice-roll__header--logo, .dice-roll__header--bw, .dice-roll__header--bl
-{
-     /* Visual Styling */
-     background-color:#3a698f;;
-     margin-top: 0px;
-}
-.dice-roll__header--logo
-{
-     /* Grid Layout */
-     grid-column-start: 1;
-     grid-column-end: 2;
-     grid-row-start: 1;
-     grid-row-end: 2;
-}
-/* add Bigest winner */
-.dice-roll__header--bw
-{
-     /* Grid Layout */
-     grid-column-start: 1;
-     grid-column-end: 2;
-     grid-row-start: 2;
-     grid-row-end: 3;
-}
-/* add Bigest Loser */
-.dice-roll__header--bl
-{
-     /* Grid Layout */
-     grid-column-start: 1;
-     grid-column-end: 2;
-     grid-row-start: 3;
-     grid-row-end: 4;
-}
+
+          /* Inner Shadow */
+          -moz-box-shadow:    inset 0 0 1px #13232f;
+          -webkit-box-shadow: inset 0 0 1px #13232f;
+          box-shadow:         inset 0 0 1px #13232f;
+     }
+/* Placing the Aside  */
+     .dice-roll__aside--logo
+     {
+          /* Grid Layout */
+          grid-column-start: 1;
+          grid-column-end: 2;
+          grid-row-start: 1;
+          grid-row-end: 2;
+     }
+     /* add Bigest winner */
+     .dice-roll__aside--bw
+     {
+          /* Grid Layout */
+          grid-column-start: 1;
+          grid-column-end: 2;
+          grid-row-start: 2;
+          grid-row-end: 3;
+     }
+     /* add Bigest Loser */
+     .dice-roll__aside--bl
+     {
+          /* Grid Layout */
+          grid-column-start: 1;
+          grid-column-end: 2;
+          grid-row-start: 3;
+          grid-row-end: 4;
+     }
+     .dice-roll__allPlays, .dice-roll__stats
+     {
+          padding-bottom: 10px;
+     }
+/* Styling the aside */
+     .dice-roll__aside--logo, .dice-roll__aside--bw, .dice-roll__aside--bl
+     {
+          /* Visual Styling */
+          background-color:#3a698f;;
+          margin-top: 0px;
+
+     }
+     .dice-roll__aside--bw-title, .dice-roll__aside--bl-title
+     {
+          height: 80%;
+          background-repeat: no-repeat;
+          background-size: 50% auto;
+          background-position: center center;
+          background-color: #4d8cbf;
+          border-radius: 05px;
+          margin: 15px;
+          margin-top: 0px;
+
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          -moz-box-shadow: inset 0 0 2px #13232f;
+          -webkit-box-shadow: inset 0 0 2px #13232f;
+          box-shadow: inset 0 0 2px #13232f;
+     }
+
+     .dice-roll__aside--bw-title
+     {
+          background-image: url('../img/winner.svg');
+     }
+     .dice-roll__aside--bl-title
+     {
+          background-image: url('../img/loser.svg');
+     }
+
+     .dice-roll__aside--bw-title, .dice-roll__aside--bl-title
+     {
+          padding: 7px;
+          padding-bottom: 10px;
+
+     }
+     .dice-roll__aside--bw-title p , .dice-roll__aside--bl-title p
+     {
+          display:inline-block;
+          width: 100%;
+          font-size: 1.5vh;
+          padding: 0px;
+
+          margin: 0px;
+     }
+     #biggestWinnerName , #biggestLoserName
+     {
+          font-size: 2vh;
+          font-weight: 500;
+     }
+
+
 /* Little Logo */
-.dice-roll__header--logo .burning-dice-logo
-{
-     display: inline-block;
-     padding-top: 2.5rem;
-     padding-bottom: 2.5rem;
-     vertical-align: text-bottom;
-     padding: 0px;
+     .dice-roll__aside--logo .burning-dice-logo
+     {
+          display: inline-block;
+          padding-top: 2.5rem;
+          padding-bottom: 2.5rem;
+          vertical-align: text-bottom;
+          padding: 0px;
 
-     text-align: center;
-     height: 75%;
-}
-.dice-roll__header--logo .burning-dice-logo img
-{
-  height: 100%;
-  width: auto;
-  vertical-align: text-bottom;
-
-}
-.dice-roll__header--logo h3,
-{
-     font-size: 1.8rem;
-}
-.dice-roll__header--logo h4
-{
-     font-size: 1rem;
-}
+          text-align: center;
+          height: 75%;
+     }
+     .dice-roll__aside--logo .burning-dice-logo img,
+     {
+       height: 100%;
+       width: auto;
+       vertical-align: text-bottom;
+     }
+     .dice-roll__aside--logo-img img
+     {
+          height: 100%;
+          width: auto;
+     }
+     .dice-roll__aside--logo-img
+     {
+          height: 75%;
+          width: auto;
+     }
+     .dice-roll__aside--logo h3,
+     {
+          font-size: 1.8rem;
+     }
+     .dice-roll__aside--logo h4
+     {
+          font-size: 1rem;
+     }
 
 
 

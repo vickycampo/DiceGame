@@ -21,7 +21,6 @@ public class JdbcDataSource
         //JdbcTemplate template = new JdbcTemplate(dataSource); // constructor
         template = new JdbcTemplate();
         template.setDataSource(dataSource);
-        System.out.println(dataSource.getClass());
     }
 
     private static DriverManagerDataSource getDataSource()

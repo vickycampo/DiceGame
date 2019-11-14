@@ -6,31 +6,38 @@ var loopCounter = 0;
 var returnJson;
 function doYouWantToRolldice()
 {
+     if (userId != "")
+     {
+          console.log ("*************************************");
+          console.log ("**** - Activate rolling screen - ****");
+          console.log ("*************************************");
+          activeSection = document.getElementById('dice-roll');
+          fixSizeLocation ( activeSection );
+          document.getElementById('diceRollingBTN').addEventListener( 'click', letsRollTheDice );
 
-     console.log ("Activate rolling screen");
-     activeSection = document.getElementById('dice-roll');
-     fixSizeLocation ( activeSection );
-     document.getElementById('diceRollingBTN').addEventListener( 'click', letsRollTheDice );
-     dicesIMG = document.getElementsByClassName('dice-roll__rollDices--dices--img');
+          getPlayerRolls();
+          refreshPlayerStats();
+          biggestWinnerRefresh();
+          biggestLoserRefresh();
 
-     document.getElementById("refreshHistory").addEventListener( 'click' , refreshPlayerGames );
-     document.getElementById("deleteHistory").addEventListener( 'click' , deletePlayerGames );
-     document.getElementById("refreshStats").addEventListener( 'click' , refreshPlayerStats );
-     document.getElementById("refreshStats").addEventListener( 'click' , refreshPlayerStats );
-     document.getElementById("biggestWinnerRefreshIcon").addEventListener( 'click' , biggestWinnerRefresh );
-     document.getElementById("biggestLoserRefreshIcon").addEventListener( 'click' , biggestLoserRefresh );
+          dicesIMG = document.getElementsByClassName('dice-roll__rollDices--dices--img');
+          document.getElementById("refreshHistory").addEventListener( 'click' , refreshPlayerGames );
+          document.getElementById("deleteHistory").addEventListener( 'click' , deletePlayerGames );
+          document.getElementById("refreshStats").addEventListener( 'click' , refreshPlayerStats );
+          document.getElementById("biggestWinnerRefreshIcon").addEventListener( 'click' , biggestWinnerRefresh );
+          document.getElementById("biggestLoserRefreshIcon").addEventListener( 'click' , biggestLoserRefresh );
+     }
+
 
 }
 function stopRolling ()
 {
-     console.log ("stopRolling");
      activeSection = document.getElementsByTagName('hgroup')[0];
      fixSizeLocation ( activeSection );
 
 }
 function letsRollTheDice ()
 {
-     console.log (" Roll the dice ");
      var localURL = window.location.href;
      var method = "POST";
      var url = "/players/" + userId + "/games";
@@ -70,7 +77,6 @@ function startRollingDice()
                if ( type == "SUCCESS")
                {
                     var Roll = returnJson["Roll"];
-                    console.log (Roll["result"]);
                     // chec if is a win or loose
                     if ( Roll["result"] =="LOST" )
                     {
@@ -112,6 +118,8 @@ function startRollingDice()
                }
                else if ( type == "ERROR")
                {
+                    console.log ("File: dice-rolls.js");
+                    console.log ("Error 118 - " + message);
                     alert ( message );
                }
                loopCounter = 0;

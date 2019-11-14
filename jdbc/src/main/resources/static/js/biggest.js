@@ -1,43 +1,47 @@
 
 function biggestWinnerRefresh ()
 {
-     console.log ("biggestWinnerRefresh");
-     var localURL = window.location.href;
-     var method = "GET";
-     var url = "/players/ranking/winner";
-     var body = "";
+     if ( userId != "" )
+     {
+          var localURL = window.location.href;
+          var method = "GET";
+          var url = "/players/ranking/winner";
+          var body = "{nothing}";
 
-     createRequestObj();
-     configureRequesObj( method , url , body , "biggestWinnerRefreshReturn ( jsonObj )");
+          createRequestObj();
+          configureRequesObj( method , url , body , "biggestWinnerRefreshReturn ( jsonObj )");
+     }
 }
 function biggestWinnerRefreshReturn ( JsonReturn )
 {
-     console.log ("biggestWinnerRefreshReturn");
-     console.log ( JsonReturn["Message"] );
      var type = JsonReturn["Message"]["Type"];
      var message = JsonReturn["Message"]["Message"];
-     console.log ( type + " - "+ message );
      if ( type == "ERROR")
      {
+          console.log ("File: biggest.js");
+          console.log ("Error 25 - " + message);
           alert (message);
      }
      else if ( type == "SUCCESS")
      {
-          console.log ( JsonReturn );
+          playerName = JsonReturn["Biggest"]["Name"];
+          document.getElementById('biggestWinnerName').textContent = playerName;
      }
 }
 
 
 function biggestLoserRefresh ()
 {
-     console.log ("biggestLoserRefresh");
-     var localURL = window.location.href;
-     var method = "GET";
-     var url = "/players/ranking/winner";
-     var body = "";
+     if ( userId != "" )
+     {
+          var localURL = window.location.href;
+          var method = "GET";
+          var url = "/players/ranking/loser";
+          var body = "";
 
-     createRequestObj();
-     configureRequesObj( method , url , body , "biggestLoserRefreshReturn ( jsonObj )");
+          createRequestObj();
+          configureRequesObj( method , url , body , "biggestLoserRefreshReturn ( jsonObj )");
+     }
 }
 function biggestLoserRefreshReturn ( JsonReturn )
 {
@@ -45,10 +49,14 @@ function biggestLoserRefreshReturn ( JsonReturn )
      var message = JsonReturn["Message"]["Message"];
      if ( type == "ERROR")
      {
+          console.log ("File: biggest.js");
+          console.log ("Error 25 - " + message);
           alert (message);
      }
      else if ( type == "SUCCESS")
      {
+          playerName = JsonReturn["Biggest"]["Name"];
+          document.getElementById('biggestLoserName').textContent = playerName;
           console.log ( JsonReturn );
      }
 }

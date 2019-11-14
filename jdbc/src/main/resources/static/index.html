@@ -47,9 +47,11 @@
           doSessionStorage();
           swapRegisterItem();
           addEventsUser();
-          getPlayerRolls();
-          getPlayerStats();
-
+          showHideButons();
+          if (userId != "")
+          {
+               doYouWantToRolldice();
+          }
 
      }
 </script>
@@ -93,25 +95,35 @@
           <!-- Content of the page-->
           <section id="dice-roll" class="dice-roll hide">
 
-               <article class="dice-roll__header--logo grid-getItem">
-                    <div class="burning-dice-logo"><img src="img/orange-logo.svg"></img></div>
+               <aside class="dice-roll__aside--logo grid-getItem">
+                    <div class="dice-roll__aside--logo-img">
+                         <img src="img/orange-logo.svg"></img>
+                    </div>
                     <div class="titles">
                          <h3>Burning Dice</h3>
                         <h4>The Game</h4>
                     </div>
-               </article>
-               <article class="dice-roll__header--bw grid-getItem">
+               </aside>
+               <aside class="dice-roll__aside--bw grid-getItem">
                     <!-- Biggest Winner -->
                     <div id="biggestWinnerRefresh">
                          <i id="biggestWinnerRefreshIcon" class="fa fa-refresh"></i>
                     </div>
-               </article>
-               <article class="dice-roll__header--bl grid-getItem">
+                    <div class="dice-roll__aside--bw-title">
+                         <p>The Biggest Winner is:</p>
+                         <p id="biggestWinnerName"></p>
+                    </div>
+               </aside>
+               <aside class="dice-roll__aside--bl grid-getItem">
                     <!-- Biggest Looser -->
                     <div id="biggestLoserRefresh">
                          <i id="biggestLoserRefreshIcon" class="fa fa-refresh"></i>
                     </div>
-               </article>
+                    <div class="dice-roll__aside--bl-title">
+                         <p>The Biggest Loser is:</p>
+                         <p id="biggestLoserName"></p>
+                    </div>
+               </aside>
                <article class="dice-roll__rollDices grid-getItem">
                     <div class="dice-roll__rollDices--diceContainer">
                          <div class="dice-roll__rollDices--dices">

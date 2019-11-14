@@ -96,7 +96,7 @@ public class PlayerRepository
         {
             List<Player> players = new ArrayList<>();
             jdbcTemplate.query(
-                    "SELECT * FROM players",
+                    "SELECT * FROM players Order by name asc",
                     (resultSet, rowNum) -> new Player(resultSet.getString("playerId"), resultSet.getString("name"), resultSet.getString("date"))
             ).forEach(player -> players.add(player));
             LOGGER.log(Level.FINE, "getAllPlayers()", players);
@@ -125,7 +125,6 @@ public class PlayerRepository
                 (resultSet, rowNum) -> new Player(resultSet.getString("playerId"), resultSet.getString("name"), resultSet.getString("date"))
         ).forEach(player -> players.add(player));
 
-        System.out.println("Size  - " + players.size());
         if ( players.size() > 0)
         {
             Iterator iter = players.iterator();

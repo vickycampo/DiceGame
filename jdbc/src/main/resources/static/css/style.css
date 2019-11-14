@@ -48,3 +48,7 @@ clearfix::after
   content: "";
   clear: both;
 }
+#gameStatsTable tr.mePlayer
+{
+     background: #CB6120;
+}
