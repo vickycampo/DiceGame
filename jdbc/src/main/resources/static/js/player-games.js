@@ -118,7 +118,6 @@ function refreshPlayerGames ()
 }
 function deletePlayerGames()
 {
-     console.log ("deletePlayerGames")
      var localURL = window.location.href;
      var method = "DELETE";
      var url = "/players/" + userId + "/games";
@@ -130,7 +129,7 @@ function deletePlayerGames()
 }
 function deletePlayerGamesReturn( JsonReturn )
 {
-     
+
 
      if ( typeof JsonReturn["Message"] !== undefined)
      {

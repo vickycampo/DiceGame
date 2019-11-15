@@ -57,6 +57,5 @@ function biggestLoserRefreshReturn ( JsonReturn )
      {
           playerName = JsonReturn["Biggest"]["Name"];
           document.getElementById('biggestLoserName').textContent = playerName;
-          console.log ( JsonReturn );
      }
 }
