@@ -111,6 +111,9 @@
 }
 #playerGameTable tr:nth-child( odd ):not(:first-child), #gameStatsTable tr:nth-child( odd ):not(:first-child)
 {
-  background-color: #80bff2;
   color: #fff;
+}
+#gameStatsTable tr.mePlayer:nth-child( even ), #gameStatsTable tr.mePlayer:nth-child( odd )
+{
+     background: #CB6120 !important;
 }

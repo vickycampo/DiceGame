@@ -11,9 +11,12 @@ public class VirtualPlayer implements Runnable
     private Player player;
     private int key;
     private AtomicBoolean running = new AtomicBoolean(false);
+    private PlayerController playerController = new PlayerController();
     public VirtualPlayer ( Player player )
     {
+        System.out.println("******************************************************");
         System.out.println( player.getName() + " has joined the game ");
+        System.out.println("******************************************************");
         setPlayer( player );
         running.set( true );
         start ();
@@ -38,7 +41,7 @@ public class VirtualPlayer implements Runnable
      */
     public void rollDices ()
     {
-        PlayerController playerController = new PlayerController();
+
         playerController.rollDices( player.getPlayerId() );
         System.out.println(player.getName() + " just rolled the dices.");
     }
@@ -47,7 +50,7 @@ public class VirtualPlayer implements Runnable
 
         try {
             long start = System.currentTimeMillis();
-            Thread.sleep(20000);
+            Thread.sleep(2000);
             System.out.println(player.getName() + " Sleep time in ms = "+(System.currentTimeMillis()-start));
         } catch (InterruptedException e)
         {
@@ -56,8 +59,13 @@ public class VirtualPlayer implements Runnable
     }
     public void delete ()
     {
+
         running.set( false );
+        String playerId = player.getPlayerId();
+        playerController.deletePlayer( playerId );
+        System.out.println("******************************************************");
         System.out.println("Player " + player.getName() + " has left the building.");
+        System.out.println("******************************************************");
         VirtualPlayersController.PlayerLeftTheBuilding ( player );
     }
 
@@ -96,12 +104,20 @@ public class VirtualPlayer implements Runnable
                     delete ();
                     break;
             }
+            if ( states[stateId - 1] != "Deleting" ) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                System.out.println( "Breaking Thread" );
+                break;
+            }
         }
 
-        try {
-            Thread.sleep( 2000 );
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
 }

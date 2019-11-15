@@ -13,8 +13,10 @@
      background-color: #26465f !important;
 
      /* size */
+     max-width: 800px;
+     max-height: 95%;
      width: 90%;
-     height: 90%;
+     height: 95%;
 
      /* placing */
      margin: auto;
