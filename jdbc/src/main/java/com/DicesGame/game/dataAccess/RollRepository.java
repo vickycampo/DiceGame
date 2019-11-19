@@ -78,7 +78,12 @@ public class RollRepository
             {
                 return null;
             }
-        } catch (DataAccessException e)
+        }
+        catch (NullPointerException e )
+        {
+            return null;
+        }
+        catch (DataAccessException e)
         {
             throw (new Exception( e.getMessage() ));
         }
@@ -94,7 +99,12 @@ public class RollRepository
                     (resultSet, rowNum) -> new Roll(resultSet.getInt("id"), resultSet.getString("playersid"), resultSet.getString("result"))
             ).forEach(roll -> rolls.add(roll));
             return (rolls);
-        } catch (DataAccessException e)
+        }
+        catch (NullPointerException e )
+        {
+            return null;
+        }
+        catch (DataAccessException e)
         {
             throw ( new Exception ("roll-" + e.getMessage()));
         }
@@ -106,18 +116,26 @@ public class RollRepository
             String deleteSql = "DELETE FROM rolls WHERE playersid = ?";
             int row = jdbcTemplate.update( deleteSql , new Object[] { playerId } );
             return true;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             throw ( new Exception ("roll - " + e.getMessage()));
         }
     }
     public HashMap<String, Double> findAverageWins ( String playerId )
     {
-        HashMap<String, Double> results  = new HashMap<>();
-        jdbcTemplate.query(
-                "SELECT result, COUNT(*) plays FROM rolls WHERE playersid = ? GROUP BY result", new Object[] { playerId },
-                (resultSet, rowNum) -> results.put(resultSet.getString("result") , resultSet.getDouble("plays")));
-        if ( results.size() > 0 )
+        HashMap<String, Double> results  = new HashMap<>();;
+        try
+        {
+            jdbcTemplate.query(
+                    "SELECT result, COUNT(*) plays FROM rolls WHERE playersid = ? GROUP BY result", new Object[] { playerId },
+                    (resultSet, rowNum) -> results.put(resultSet.getString("result") , resultSet.getDouble("plays")));
+        }
+        catch (NullPointerException e )
+        {
+
+        }
+        if (( results != null )&&( results.size() > 0 ))
         {
             double wins = 0;
             double loses = 0;
@@ -141,11 +159,17 @@ public class RollRepository
     }
     public String findAllAverageWins()
     {
-        HashMap<String, Integer> results  = new HashMap<>();
-        jdbcTemplate.query(
-                "SELECT result, COUNT(*) plays FROM rolls GROUP BY result" ,
-                (resultSet, rowNum) -> results.put(resultSet.getString("result") , resultSet.getInt("plays")));
-        if ( results.size() > 0 )
+        HashMap<String, Integer> results  = new HashMap<>();;
+        try {
+            jdbcTemplate.query(
+                    "SELECT result, COUNT(*) plays FROM rolls GROUP BY result" ,
+                    (resultSet, rowNum) -> results.put(resultSet.getString("result") , resultSet.getInt("plays")));
+        }
+        catch (NullPointerException e )
+        {
+
+        }
+        if (( results != null )&&( results.size() > 0 ))
         {
 
             int wins = 0;

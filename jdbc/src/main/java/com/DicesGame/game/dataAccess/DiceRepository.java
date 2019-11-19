@@ -72,6 +72,10 @@ public class DiceRepository
             ).forEach(dice -> dices.add(dice));
             return dices;
         }
+        catch (NullPointerException e)
+        {
+            return null;
+        }
         catch (DataAccessException e)
         {
             throw (new Exception( e.getMessage() ));
@@ -94,6 +98,10 @@ public class DiceRepository
             }
             return dices;
 
+        }
+        catch (NullPointerException e)
+        {
+            return null;
         }
         catch (DataAccessException e)
         {
